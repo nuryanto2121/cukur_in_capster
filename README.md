@@ -1,2 +1,2 @@
-# cukur_in_capster
-Rest API Cukur_in Capster apps
+# EchoGoCukurIn
+Rest API Golang echo For Cukur-In Capster Apps
