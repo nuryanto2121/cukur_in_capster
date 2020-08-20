@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"nuryanto2121/dynamic_rest_api_go/pkg/monggodb"
-	util "nuryanto2121/dynamic_rest_api_go/pkg/utils"
+	"nuryanto2121/cukur_in_capster/pkg/monggodb"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"time"
 )
 

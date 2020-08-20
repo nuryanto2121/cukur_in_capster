@@ -1,9 +1,9 @@
 package tool
 
 import (
-	"nuryanto2121/dynamic_rest_api_go/models"
-	"nuryanto2121/dynamic_rest_api_go/pkg/logging"
-	util "nuryanto2121/dynamic_rest_api_go/pkg/utils"
+	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/logging"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 
 	"github.com/labstack/echo/v4"
 )

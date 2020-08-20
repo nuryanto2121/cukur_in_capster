@@ -1,25 +1,25 @@
 package routes
 
 import (
-	"nuryanto2121/dynamic_rest_api_go/pkg/postgresdb"
-	// sqlxposgresdb "nuryanto2121/dynamic_rest_api_go/pkg/postgresqlxdb"
-	"nuryanto2121/dynamic_rest_api_go/pkg/setting"
+	"nuryanto2121/cukur_in_capster/pkg/postgresdb"
+	// sqlxposgresdb "nuryanto2121/cukur_in_capster/pkg/postgresqlxdb"
+	"nuryanto2121/cukur_in_capster/pkg/setting"
 
-	_saauthcont "nuryanto2121/dynamic_rest_api_go/controllers/auth"
-	_authuse "nuryanto2121/dynamic_rest_api_go/usecase/auth"
+	_saauthcont "nuryanto2121/cukur_in_capster/controllers/auth"
+	_authuse "nuryanto2121/cukur_in_capster/usecase/auth"
 
-	_saFilecont "nuryanto2121/dynamic_rest_api_go/controllers/fileupload"
-	_repoFile "nuryanto2121/dynamic_rest_api_go/repository/ss_fileupload"
-	_useFile "nuryanto2121/dynamic_rest_api_go/usecase/ss_fileupload"
+	_saFilecont "nuryanto2121/cukur_in_capster/controllers/fileupload"
+	_repoFile "nuryanto2121/cukur_in_capster/repository/ss_fileupload"
+	_useFile "nuryanto2121/cukur_in_capster/usecase/ss_fileupload"
 
-	_contUser "nuryanto2121/dynamic_rest_api_go/controllers/user"
-	_repoUser "nuryanto2121/dynamic_rest_api_go/repository/ss_user"
-	_useUser "nuryanto2121/dynamic_rest_api_go/usecase/ss_user"
+	_contUser "nuryanto2121/cukur_in_capster/controllers/user"
+	_repoUser "nuryanto2121/cukur_in_capster/repository/ss_user"
+	_useUser "nuryanto2121/cukur_in_capster/usecase/ss_user"
 
-	_contOrder "nuryanto2121/dynamic_rest_api_go/controllers/c_order"
-	_repoOrderd "nuryanto2121/dynamic_rest_api_go/repository/c_order_d"
-	_repoOrder "nuryanto2121/dynamic_rest_api_go/repository/c_order_h"
-	_useOrder "nuryanto2121/dynamic_rest_api_go/usecase/c_order"
+	_contOrder "nuryanto2121/cukur_in_capster/controllers/c_order"
+	_repoOrderd "nuryanto2121/cukur_in_capster/repository/c_order_d"
+	_repoOrder "nuryanto2121/cukur_in_capster/repository/c_order_h"
+	_useOrder "nuryanto2121/cukur_in_capster/usecase/c_order"
 
 	"time"
 

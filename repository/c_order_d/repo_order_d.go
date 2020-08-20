@@ -2,10 +2,10 @@ package repoorderd
 
 import (
 	"fmt"
-	iorder_d "nuryanto2121/dynamic_rest_api_go/interface/c_order_d"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	"nuryanto2121/dynamic_rest_api_go/pkg/logging"
-	"nuryanto2121/dynamic_rest_api_go/pkg/setting"
+	iorder_d "nuryanto2121/cukur_in_capster/interface/c_order_d"
+	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/logging"
+	"nuryanto2121/cukur_in_capster/pkg/setting"
 
 	"github.com/jinzhu/gorm"
 )

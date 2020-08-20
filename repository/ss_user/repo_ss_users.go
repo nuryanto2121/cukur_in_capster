@@ -2,10 +2,10 @@ package reposysusers
 
 import (
 	"fmt"
-	iusers "nuryanto2121/dynamic_rest_api_go/interface/user"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	"nuryanto2121/dynamic_rest_api_go/pkg/logging"
-	"nuryanto2121/dynamic_rest_api_go/pkg/setting"
+	iusers "nuryanto2121/cukur_in_capster/interface/user"
+	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/logging"
+	"nuryanto2121/cukur_in_capster/pkg/setting"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/gommon/log"

@@ -4,7 +4,7 @@
     "expire_jwt":72,
     "server": {
         "run_mode": "debug",
-        "http_port": 9191,
+        "http_port": 9192,
         "read_timeout": 600,
         "write_timeout": 600,
         "_comment": "debug or release"

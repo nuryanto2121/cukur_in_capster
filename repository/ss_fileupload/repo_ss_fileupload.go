@@ -3,9 +3,9 @@ package repofileupload
 import (
 	"context"
 	"fmt"
-	ifileupload "nuryanto2121/dynamic_rest_api_go/interface/fileupload"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	"nuryanto2121/dynamic_rest_api_go/pkg/logging"
+	ifileupload "nuryanto2121/cukur_in_capster/interface/fileupload"
+	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/logging"
 
 	"github.com/jinzhu/gorm"
 )

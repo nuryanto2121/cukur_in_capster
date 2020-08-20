@@ -3,13 +3,13 @@ package useauth
 import (
 	"context"
 	"errors"
-	iauth "nuryanto2121/dynamic_rest_api_go/interface/auth"
-	ifileupload "nuryanto2121/dynamic_rest_api_go/interface/fileupload"
-	iusers "nuryanto2121/dynamic_rest_api_go/interface/user"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	util "nuryanto2121/dynamic_rest_api_go/pkg/utils"
-	"nuryanto2121/dynamic_rest_api_go/redisdb"
-	useemailauth "nuryanto2121/dynamic_rest_api_go/usecase/email_auth"
+	iauth "nuryanto2121/cukur_in_capster/interface/auth"
+	ifileupload "nuryanto2121/cukur_in_capster/interface/fileupload"
+	iusers "nuryanto2121/cukur_in_capster/interface/user"
+	"nuryanto2121/cukur_in_capster/models"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
+	"nuryanto2121/cukur_in_capster/redisdb"
+	useemailauth "nuryanto2121/cukur_in_capster/usecase/email_auth"
 	"time"
 )
 

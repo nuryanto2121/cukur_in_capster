@@ -2,7 +2,7 @@ package iusers
 
 import (
 	"context"
-	"nuryanto2121/dynamic_rest_api_go/models"
+	"nuryanto2121/cukur_in_capster/models"
 )
 
 type Repository interface {

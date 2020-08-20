@@ -3,9 +3,9 @@ package postgresdb
 import (
 	"fmt"
 	"log"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	"nuryanto2121/dynamic_rest_api_go/pkg/setting"
-	util "nuryanto2121/dynamic_rest_api_go/pkg/utils"
+	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/setting"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"time"
 
 	"github.com/jinzhu/gorm"

@@ -4,15 +4,15 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	iauth "nuryanto2121/dynamic_rest_api_go/interface/auth"
-	midd "nuryanto2121/dynamic_rest_api_go/middleware"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	app "nuryanto2121/dynamic_rest_api_go/pkg"
-	"nuryanto2121/dynamic_rest_api_go/pkg/logging"
-	tool "nuryanto2121/dynamic_rest_api_go/pkg/tools"
-	util "nuryanto2121/dynamic_rest_api_go/pkg/utils"
+	iauth "nuryanto2121/cukur_in_capster/interface/auth"
+	midd "nuryanto2121/cukur_in_capster/middleware"
+	"nuryanto2121/cukur_in_capster/models"
+	app "nuryanto2121/cukur_in_capster/pkg"
+	"nuryanto2121/cukur_in_capster/pkg/logging"
+	tool "nuryanto2121/cukur_in_capster/pkg/tools"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 
-	_ "nuryanto2121/dynamic_rest_api_go/docs"
+	_ "nuryanto2121/cukur_in_capster/docs"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 

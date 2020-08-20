@@ -4,17 +4,17 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	iusers "nuryanto2121/dynamic_rest_api_go/interface/user"
-	midd "nuryanto2121/dynamic_rest_api_go/middleware"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	app "nuryanto2121/dynamic_rest_api_go/pkg"
-	tool "nuryanto2121/dynamic_rest_api_go/pkg/tools"
+	iusers "nuryanto2121/cukur_in_capster/interface/user"
+	midd "nuryanto2121/cukur_in_capster/middleware"
+	"nuryanto2121/cukur_in_capster/models"
+	app "nuryanto2121/cukur_in_capster/pkg"
+	tool "nuryanto2121/cukur_in_capster/pkg/tools"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/mitchellh/mapstructure"
 
-	_ "nuryanto2121/dynamic_rest_api_go/docs"
+	_ "nuryanto2121/cukur_in_capster/docs"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 )

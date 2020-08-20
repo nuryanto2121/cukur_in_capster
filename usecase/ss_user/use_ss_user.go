@@ -3,9 +3,9 @@ package usesysuser
 import (
 	"context"
 	"math"
-	iusers "nuryanto2121/dynamic_rest_api_go/interface/user"
-	"nuryanto2121/dynamic_rest_api_go/models"
-	querywhere "nuryanto2121/dynamic_rest_api_go/pkg/query"
+	iusers "nuryanto2121/cukur_in_capster/interface/user"
+	"nuryanto2121/cukur_in_capster/models"
+	querywhere "nuryanto2121/cukur_in_capster/pkg/query"
 	"reflect"
 	"time"
 

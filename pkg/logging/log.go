@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"nuryanto2121/dynamic_rest_api_go/pkg/file"
+	"nuryanto2121/cukur_in_capster/pkg/file"
 )
 
 // Level :
