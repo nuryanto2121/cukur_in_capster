@@ -12,65 +12,7 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/fileupload": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Upload file",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "FileUpload"
-                ],
-                "summary": "File Upload",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "file",
-                        "description": "account image",
-                        "name": "upload_file",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "path images",
-                        "name": "path",
-                        "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/auth/change_password": {
+        "/api.v1/capster/auth/change_password": {
             "post": {
                 "produces": [
                     "application/json"
@@ -115,7 +57,7 @@
                 }
             }
         },
-        "/barber/auth/forgot": {
+        "/api.v1/capster/auth/forgot": {
             "post": {
                 "produces": [
                     "application/json"
@@ -160,7 +102,7 @@
                 }
             }
         },
-        "/barber/auth/login": {
+        "/api.v1/capster/auth/login": {
             "post": {
                 "produces": [
                     "application/json"
@@ -205,7 +147,7 @@
                 }
             }
         },
-        "/barber/auth/register": {
+        "/api.v1/capster/auth/register": {
             "post": {
                 "produces": [
                     "application/json"
@@ -250,7 +192,7 @@
                 }
             }
         },
-        "/barber/auth/verify": {
+        "/api.v1/capster/auth/verify": {
             "post": {
                 "produces": [
                     "application/json"
@@ -295,613 +237,7 @@
                 }
             }
         },
-        "/barber/barber": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber"
-                ],
-                "summary": "GetList Barber",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "PerPage",
-                        "name": "perpage",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search",
-                        "name": "search",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "InitSearch",
-                        "name": "initsearch",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "SortField",
-                        "name": "sortfield",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ResponseModelList"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber"
-                ],
-                "summary": "Add Barber",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.BarbersPost"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/barber/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber"
-                ],
-                "summary": "GetById",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber"
-                ],
-                "summary": "Rubah Profile",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.BarbersPost"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber"
-                ],
-                "summary": "Delete Barber",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/beranda": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Barber Beranda"
-                ],
-                "summary": "GetList Barber Beranda",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "PerPage",
-                        "name": "perpage",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search",
-                        "name": "search",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "InitSearch",
-                        "name": "initsearch",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "SortField",
-                        "name": "sortfield",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ResponseModelList"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/capster": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Capster"
-                ],
-                "summary": "GetList Capster",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "PerPage",
-                        "name": "perpage",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search",
-                        "name": "search",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "InitSearch",
-                        "name": "initsearch",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "SortField",
-                        "name": "sortfield",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ResponseModelList"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Capster"
-                ],
-                "summary": "Add Capster",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.Capster"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/capster/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Capster"
-                ],
-                "summary": "GetById",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Capster"
-                ],
-                "summary": "Rubah Profile",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.Capster"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Capster"
-                ],
-                "summary": "Delete Capster",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/order": {
+        "/api.v1/capster/order": {
             "get": {
                 "security": [
                     {
@@ -1021,7 +357,7 @@
                 }
             }
         },
-        "/barber/order/{id}": {
+        "/api.v1/capster/order/{id}": {
             "get": {
                 "security": [
                     {
@@ -1168,274 +504,7 @@
                 }
             }
         },
-        "/barber/paket": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Paket"
-                ],
-                "summary": "GetList Paket",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Page",
-                        "name": "page",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "PerPage",
-                        "name": "perpage",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search",
-                        "name": "search",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "InitSearch",
-                        "name": "initsearch",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "SortField",
-                        "name": "sortfield",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ResponseModelList"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Paket"
-                ],
-                "summary": "Add Paket",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.DataPaket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/paket/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Paket"
-                ],
-                "summary": "GetById",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Paket"
-                ],
-                "summary": "Rubah Profile",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "req param #changes are possible to adjust the form of the registration form from frontend",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.DataPaket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Paket"
-                ],
-                "summary": "Delete Paket",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "OS",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "OS Device",
-                        "name": "Version",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/tool.ResponseModel"
-                        }
-                    }
-                }
-            }
-        },
-        "/barber/user": {
+        "/api.v1/capster/user": {
             "get": {
                 "security": [
                     {
@@ -1555,7 +624,7 @@
                 }
             }
         },
-        "/barber/user/{id}": {
+        "/api.v1/capster/user/{id}": {
             "get": {
                 "security": [
                     {
@@ -1701,6 +770,64 @@
                     }
                 }
             }
+        },
+        "/api.v1/fileupload": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Upload file",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FileUpload"
+                ],
+                "summary": "File Upload",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "OS Device",
+                        "name": "OS",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "OS Device",
+                        "name": "Version",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "account image",
+                        "name": "upload_file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "path images",
+                        "name": "path",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tool.ResponseModel"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1720,142 +847,6 @@
                     "type": "string"
                 },
                 "telp": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.BarberCapsterPost": {
-            "type": "object",
-            "properties": {
-                "capster_jd": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.BarberPaketPost": {
-            "type": "object",
-            "properties": {
-                "paket_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.BarbersPost": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "barber_capster": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.BarberCapsterPost"
-                    }
-                },
-                "barber_name": {
-                    "type": "string"
-                },
-                "barber_paket": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.BarberPaketPost"
-                    }
-                },
-                "file_id": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "operation_end": {
-                    "type": "integer"
-                },
-                "operation_start": {
-                    "type": "integer"
-                },
-                "pin_map": {
-                    "type": "string"
-                },
-                "starts": {
-                    "type": "number"
-                }
-            }
-        },
-        "models.Capster": {
-            "type": "object",
-            "properties": {
-                "file_id": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "join_date": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "topCollection": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Collections"
-                    }
-                },
-                "user_type": {
-                    "description": "Telp      string    `json:\"telp\"`\nEmail     string    `json:\"email\"`",
-                    "type": "string"
-                }
-            }
-        },
-        "models.Collections": {
-            "type": "object",
-            "properties": {
-                "file_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.DataPaket": {
-            "type": "object",
-            "properties": {
-                "descs": {
-                    "type": "string"
-                },
-                "durasi_end": {
-                    "type": "integer"
-                },
-                "durasi_start": {
-                    "type": "integer"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "is_promo": {
-                    "type": "boolean"
-                },
-                "owner_id": {
-                    "type": "integer"
-                },
-                "paket_name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "number"
-                },
-                "promo_end": {
-                    "type": "integer"
-                },
-                "promo_price": {
-                    "type": "number"
-                },
-                "promo_start": {
-                    "type": "integer"
-                },
-                "time_Edit": {
-                    "type": "string"
-                },
-                "user_edit": {
                     "type": "string"
                 }
             }
@@ -1902,16 +893,11 @@
         "models.OrderPost": {
             "type": "object",
             "properties": {
-                "barber_id": {
-                    "type": "integer"
-                },
-                "capster_id": {
-                    "type": "integer"
-                },
                 "customer_name": {
                     "type": "string"
                 },
                 "order_date": {
+                    "description": "BarberID     int          `json:\"barber_id\" valid:\"Required\"`\nCapsterID    int          `json:\"capster_id,omitempty\"`",
                     "type": "integer"
                 },
                 "paket_ids": {

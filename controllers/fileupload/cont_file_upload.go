@@ -32,7 +32,7 @@ func NewContFileUpload(e *echo.Echo, useSaFileUpload ifileupload.UseCase) {
 	}
 
 	e.Static("/wwwroot", "wwwroot")
-	r := e.Group("/api/fileupload")
+	r := e.Group("/api.v1/fileupload")
 	// Configure middleware with custom claims
 	r.Use(midd.Versioning)
 	r.Use(midd.JWT)
@@ -52,7 +52,7 @@ func NewContFileUpload(e *echo.Echo, useSaFileUpload ifileupload.UseCase) {
 // @Param upload_file formData file true "account image"
 // @Param path formData string true "path images"
 // @Success 200 {object} tool.ResponseModel
-// @Router /api/fileupload [post]
+// @Router /api.v1/fileupload [post]
 func (u *ContFileUpload) CreateImage(e echo.Context) (err error) {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -139,8 +139,8 @@ func (u *ContFileUpload) CreateImage(e echo.Context) (err error) {
 		imageForm.FileName = fileNameAndUnix
 		imageForm.FilePath = fmt.Sprintf("%s/%s", path_file, fileNameAndUnix)
 		imageForm.FileType = filepath.Ext(fileNameAndUnix)
-		imageForm.UserInput = claims.UserName
-		imageForm.UserEdit = claims.UserName
+		imageForm.UserInput = claims.CapsterID
+		imageForm.UserEdit = claims.CapsterID
 		// err = u.useSaFileUpload.CreateSaFileUpload(ctx, &imageForm)
 		err = u.useSaFileUpload.CreateFileUpload(ctx, &imageForm)
 

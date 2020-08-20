@@ -55,11 +55,11 @@ func autoMigrate() {
 	log.Println("STARTING AUTO MIGRATE ")
 	Conn.AutoMigrate(
 		models.SsUser{},
-		models.Paket{},
-		models.CapsterCollection{},
-		models.Barber{},
-		models.BarberPaket{},
-		models.BarberCapster{},
+		// models.Paket{},
+		// models.CapsterCollection{},
+		// models.Barber{},
+		// models.BarberPaket{},
+		// models.BarberCapster{},
 		models.SaFileUpload{},
 		models.OrderH{},
 		models.OrderD{},

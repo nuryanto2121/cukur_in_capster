@@ -12,97 +12,6 @@ definitions:
       telp:
         type: string
     type: object
-  models.BarberCapsterPost:
-    properties:
-      capster_jd:
-        type: integer
-    type: object
-  models.BarberPaketPost:
-    properties:
-      paket_id:
-        type: integer
-    type: object
-  models.BarbersPost:
-    properties:
-      address:
-        type: string
-      barber_capster:
-        items:
-          $ref: '#/definitions/models.BarberCapsterPost'
-        type: array
-      barber_name:
-        type: string
-      barber_paket:
-        items:
-          $ref: '#/definitions/models.BarberPaketPost'
-        type: array
-      file_id:
-        type: integer
-      is_active:
-        type: boolean
-      operation_end:
-        type: integer
-      operation_start:
-        type: integer
-      pin_map:
-        type: string
-      starts:
-        type: number
-    type: object
-  models.Capster:
-    properties:
-      file_id:
-        type: integer
-      is_active:
-        type: boolean
-      join_date:
-        type: string
-      name:
-        type: string
-      topCollection:
-        items:
-          $ref: '#/definitions/models.Collections'
-        type: array
-      user_type:
-        description: |-
-          Telp      string    `json:"telp"`
-          Email     string    `json:"email"`
-        type: string
-    type: object
-  models.Collections:
-    properties:
-      file_id:
-        type: integer
-    type: object
-  models.DataPaket:
-    properties:
-      descs:
-        type: string
-      durasi_end:
-        type: integer
-      durasi_start:
-        type: integer
-      is_active:
-        type: boolean
-      is_promo:
-        type: boolean
-      owner_id:
-        type: integer
-      paket_name:
-        type: string
-      price:
-        type: number
-      promo_end:
-        type: integer
-      promo_price:
-        type: number
-      promo_start:
-        type: integer
-      time_Edit:
-        type: string
-      user_edit:
-        type: string
-    type: object
   models.ForgotForm:
     properties:
       account:
@@ -130,13 +39,12 @@ definitions:
     type: object
   models.OrderPost:
     properties:
-      barber_id:
-        type: integer
-      capster_id:
-        type: integer
       customer_name:
         type: string
       order_date:
+        description: |-
+          BarberID     int          `json:"barber_id" valid:"Required"`
+          CapsterID    int          `json:"capster_id,omitempty"`
         type: integer
       paket_ids:
         items:
@@ -222,45 +130,7 @@ info:
   title: Starter
   version: "1.0"
 paths:
-  /api/fileupload:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Upload file
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: account image
-        in: formData
-        name: upload_file
-        required: true
-        type: file
-      - description: path images
-        in: formData
-        name: path
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: File Upload
-      tags:
-      - FileUpload
-  /barber/auth/change_password:
+  /api.v1/capster/auth/change_password:
     post:
       parameters:
       - description: OS Device
@@ -291,7 +161,7 @@ paths:
       summary: Change Password
       tags:
       - Auth
-  /barber/auth/forgot:
+  /api.v1/capster/auth/forgot:
     post:
       parameters:
       - description: OS Device
@@ -322,7 +192,7 @@ paths:
       summary: Forgot Password
       tags:
       - Auth
-  /barber/auth/login:
+  /api.v1/capster/auth/login:
     post:
       parameters:
       - description: OS Device
@@ -353,7 +223,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /barber/auth/register:
+  /api.v1/capster/auth/register:
     post:
       parameters:
       - description: OS Device
@@ -384,7 +254,7 @@ paths:
       summary: Register
       tags:
       - Auth
-  /barber/auth/verify:
+  /api.v1/capster/auth/verify:
     post:
       parameters:
       - description: OS Device
@@ -415,404 +285,7 @@ paths:
       summary: Verify
       tags:
       - Auth
-  /barber/barber:
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: Page
-        in: query
-        name: page
-        required: true
-        type: integer
-      - description: PerPage
-        in: query
-        name: perpage
-        required: true
-        type: integer
-      - description: Search
-        in: query
-        name: search
-        type: string
-      - description: InitSearch
-        in: query
-        name: initsearch
-        type: string
-      - description: SortField
-        in: query
-        name: sortfield
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ResponseModelList'
-      security:
-      - ApiKeyAuth: []
-      summary: GetList Barber
-      tags:
-      - Barber
-    post:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.BarbersPost'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Add Barber
-      tags:
-      - Barber
-  /barber/barber/{id}:
-    delete:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete Barber
-      tags:
-      - Barber
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: GetById
-      tags:
-      - Barber
-    put:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.BarbersPost'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Rubah Profile
-      tags:
-      - Barber
-  /barber/beranda:
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: Page
-        in: query
-        name: page
-        required: true
-        type: integer
-      - description: PerPage
-        in: query
-        name: perpage
-        required: true
-        type: integer
-      - description: Search
-        in: query
-        name: search
-        type: string
-      - description: InitSearch
-        in: query
-        name: initsearch
-        type: string
-      - description: SortField
-        in: query
-        name: sortfield
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ResponseModelList'
-      security:
-      - ApiKeyAuth: []
-      summary: GetList Barber Beranda
-      tags:
-      - Barber Beranda
-  /barber/capster:
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: Page
-        in: query
-        name: page
-        required: true
-        type: integer
-      - description: PerPage
-        in: query
-        name: perpage
-        required: true
-        type: integer
-      - description: Search
-        in: query
-        name: search
-        type: string
-      - description: InitSearch
-        in: query
-        name: initsearch
-        type: string
-      - description: SortField
-        in: query
-        name: sortfield
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ResponseModelList'
-      security:
-      - ApiKeyAuth: []
-      summary: GetList Capster
-      tags:
-      - Capster
-    post:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.Capster'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Add Capster
-      tags:
-      - Capster
-  /barber/capster/{id}:
-    delete:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete Capster
-      tags:
-      - Capster
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: GetById
-      tags:
-      - Capster
-    put:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.Capster'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Rubah Profile
-      tags:
-      - Capster
-  /barber/order:
+  /api.v1/capster/order:
     get:
       parameters:
       - description: OS Device
@@ -891,7 +364,7 @@ paths:
       summary: Add Order
       tags:
       - Order
-  /barber/order/{id}:
+  /api.v1/capster/order/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -987,182 +460,7 @@ paths:
       summary: Rubah Profile
       tags:
       - Order
-  /barber/paket:
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: Page
-        in: query
-        name: page
-        required: true
-        type: integer
-      - description: PerPage
-        in: query
-        name: perpage
-        required: true
-        type: integer
-      - description: Search
-        in: query
-        name: search
-        type: string
-      - description: InitSearch
-        in: query
-        name: initsearch
-        type: string
-      - description: SortField
-        in: query
-        name: sortfield
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ResponseModelList'
-      security:
-      - ApiKeyAuth: []
-      summary: GetList Paket
-      tags:
-      - Paket
-    post:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.DataPaket'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Add Paket
-      tags:
-      - Paket
-  /barber/paket/{id}:
-    delete:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete Paket
-      tags:
-      - Paket
-    get:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: GetById
-      tags:
-      - Paket
-    put:
-      parameters:
-      - description: OS Device
-        in: header
-        name: OS
-        required: true
-        type: string
-      - description: OS Device
-        in: header
-        name: Version
-        required: true
-        type: string
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/models.DataPaket'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/tool.ResponseModel'
-      security:
-      - ApiKeyAuth: []
-      summary: Rubah Profile
-      tags:
-      - Paket
-  /barber/user:
+  /api.v1/capster/user:
     get:
       parameters:
       - description: OS Device
@@ -1241,7 +539,7 @@ paths:
       summary: Add User
       tags:
       - User
-  /barber/user/{id}:
+  /api.v1/capster/user/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -1337,6 +635,44 @@ paths:
       summary: Rubah Profile
       tags:
       - User
+  /api.v1/fileupload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload file
+      parameters:
+      - description: OS Device
+        in: header
+        name: OS
+        required: true
+        type: string
+      - description: OS Device
+        in: header
+        name: Version
+        required: true
+        type: string
+      - description: account image
+        in: formData
+        name: upload_file
+        required: true
+        type: file
+      - description: path images
+        in: formData
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.ResponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: File Upload
+      tags:
+      - FileUpload
 securityDefinitions:
   ApiKeyAuth:
     in: header

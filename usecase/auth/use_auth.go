@@ -26,37 +26,38 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	DataUser, err := u.repoAuth.GetByAccount(dataLogin.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
+	DataCapster, err := u.repoAuth.GetByAccount(dataLogin.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
 	if err != nil {
 		// return util.GoutputErrCode(http.StatusUnauthorized, "Your User/Email not valid.") //appE.ResponseError(util.GetStatusCode(err), fmt.Sprintf("%v", err), nil)
 		return nil, errors.New("Your Account not valid.")
 	}
 
-	if !util.ComparePassword(DataUser.Password, util.GetPassword(dataLogin.Password)) {
+	if !util.ComparePassword(DataCapster.Password, util.GetPassword(dataLogin.Password)) {
 		return nil, errors.New("Your Password not valid.")
 	}
-	DataFile, err := u.repoFile.GetBySaFileUpload(ctx, DataUser.FileID)
+	// DataFile, err := u.repoFile.GetBySaFileUpload(ctx, DataCapster.FileID)
 
-	token, err := util.GenerateToken(DataUser.UserID, dataLogin.Account, DataUser.UserType)
+	token, err := util.GenerateToken(DataCapster.CapsterID, dataLogin.Account, DataCapster.BarberID)
 	if err != nil {
 		return nil, err
 	}
 
-	redisdb.AddSession(token, DataUser.UserID, 0)
+	redisdb.AddSession(token, DataCapster.CapsterID, 0)
 
 	restUser := map[string]interface{}{
-		"id":        DataUser.UserID,
-		"email":     DataUser.Email,
-		"telp":      DataUser.Telp,
-		"user_name": DataUser.Name,
-		"user_type": DataUser.UserType,
-		"file_id":   DataUser.FileID,
-		"file_name": DataFile.FileName,
-		"file_path": DataFile.FilePath,
+		"barber_id":    DataCapster.BarberID,
+		"barber_name":  DataCapster.BarberName,
+		"capster_id":   DataCapster.CapsterID,
+		"email":        DataCapster.Email,
+		"telp":         DataCapster.Telp,
+		"capster_name": DataCapster.CapsterName,
+		"file_id":      DataCapster.FileID,
+		"file_name":    DataCapster.FileName,
+		"file_path":    DataCapster.FilePath,
 	}
 	response := map[string]interface{}{
-		"token":     token,
-		"data_user": restUser,
+		"token":        token,
+		"data_capster": restUser,
 	}
 
 	return response, nil
@@ -66,12 +67,12 @@ func (u *useAuht) ForgotPassword(ctx context.Context, dataForgot *models.ForgotF
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	DataUser, err := u.repoAuth.GetByAccount(dataForgot.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
+	DataCapster, err := u.repoAuth.GetByAccount(dataForgot.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
 	if err != nil {
 		// return util.GoutputErrCode(http.StatusUnauthorized, "Your User/Email not valid.") //appE.ResponseError(util.GetStatusCode(err), fmt.Sprintf("%v", err), nil)
 		return errors.New("Your Account not valid.")
 	}
-	if DataUser.Name == "" {
+	if DataCapster.CapsterName == "" {
 		return errors.New("Your Account not valid.")
 	}
 
@@ -86,11 +87,15 @@ func (u *useAuht) ResetPassword(ctx context.Context, dataReset *models.ResetPass
 		return errors.New("Password and Confirm Password not same.")
 	}
 
-	DataUser, err := u.repoAuth.GetByAccount(dataReset.Account)
+	DataCapster, err := u.repoAuth.GetByAccount(dataReset.Account)
 	if err != nil {
 		return err
 	}
 
+	DataUser, err := u.repoAuth.GetDataBy(DataCapster.CapsterID)
+	if err != nil {
+		return err
+	}
 	DataUser.Password, _ = util.Hash(dataReset.Passwd)
 	// email, err := util.ParseEmailToken(dataReset.TokenEmail)
 	// if err != nil {

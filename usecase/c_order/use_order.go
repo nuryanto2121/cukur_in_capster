@@ -46,7 +46,7 @@ func (u *useOrder) GetList(ctx context.Context, Claims util.Claims, queryparam m
 		queryparam.Search = fmt.Sprintf("lower(order_name) LIKE '%%%s%%' ", queryparam.Search)
 	}
 
-	queryparam.InitSearch = fmt.Sprintf("barber.owner_id = %s", Claims.UserID)
+	// queryparam.InitSearch = fmt.Sprintf("barber.owner_id = %s", Claims.UserID)
 	result.Data, err = u.repoOrderH.GetList(queryparam)
 	if err != nil {
 		return result, err
@@ -74,14 +74,13 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	if err != nil {
 		return err
 	}
+	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"
 	mOrder.FromApps = false
-	if mOrder.CapsterID == 0 {
-		mOrder.CapsterID, _ = strconv.Atoi(Claims.UserID)
-	}
+	mOrder.CapsterID, _ = strconv.Atoi(Claims.CapsterID)
 
-	mOrder.UserInput = Claims.UserID
-	mOrder.UserEdit = Claims.UserID
+	mOrder.UserInput = Claims.CapsterID
+	mOrder.UserEdit = Claims.CapsterID
 	err = u.repoOrderH.Create(&mOrder)
 	if err != nil {
 		return err
@@ -95,8 +94,8 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 		}
 		mDetail.BarberID = mOrder.BarberID
 		mDetail.OrderID = mOrder.OrderID
-		mDetail.UserEdit = Claims.UserID
-		mDetail.UserInput = Claims.UserID
+		mDetail.UserEdit = Claims.CapsterID
+		mDetail.UserInput = Claims.CapsterID
 		err = u.repoOrderD.Create(&mDetail)
 		if err != nil {
 			return err

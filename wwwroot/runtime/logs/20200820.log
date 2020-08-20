@@ -1,0 +1,21 @@
+[INFO][(*ContAuth)][cont_auth.go:76]2020/08/20 12:06:17 {"account":"1111","pwd":"1"}
+[ERROR][Res][response.go:43]2020/08/20 12:06:17 {"message":"Your Password not valid.","data":null}
+[INFO][(*ContAuth)][cont_auth.go:76]2020/08/20 12:06:38 {"account":"1111","pwd":"2"}
+[ERROR][Res][response.go:43]2020/08/20 12:06:38 {"message":"Your Password not valid.","data":null}
+[INFO][(*ContAuth)][cont_auth.go:114]2020/08/20 12:07:09 {"account":"1111","pwd":"1","confirm_pwd":"1"}
+[QUERY][(*repoSysUser)][repo_ss_users.go:128]2020/08/20 12:07:12 &{SELECT * FROM "ss_user"  WHERE (user_id = ?) [9]}
+[INFO][Res][response.go:31]2020/08/20 12:07:14 {"message":"Ok","data":"Please Login"}
+[INFO][(*ContAuth)][cont_auth.go:76]2020/08/20 12:11:33 {"account":"1111","pwd":"1"}
+[QUERY][(*repoAuth)][repo_ss_fileupload.go:40]2020/08/20 12:11:33 &{SELECT * FROM "sa_file_upload"  WHERE "sa_file_upload"."file_id" = ? AND ((file_id = ?)) [2 2]}
+[INFO][Res][response.go:31]2020/08/20 12:11:33 {"message":"Ok","data":{"data_user":{"email":"capster@gmail.com","file_id":2,"file_name":"1595093364_naruto.jpg","file_path":"/wwwroot/uploads/Profile/1595093364_naruto.jpg","id":9,"telp":"1111","user_name":"capster 1 update","user_type":"capster"},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOSIsInVzZXJfbmFtZSI6IjExMTEiLCJ1c2VyX3R5cGUiOiJjYXBzdGVyIiwiZXhwIjoxNTk4MTU5NDkzLCJpc3MiOiJQcm9wZXJ0eUZyYW1ld29yayJ9.SiK2oe2SsaG3xJB3PJiHxsDi8wp7q75T-F3MmDhmFkY"}}
+[QUERY][(*repoOrderH)][repo_order_h.go:89]2020/08/20 12:12:44 &{SELECT barber.barber_id ,barber.barber_name ,order_h.order_id ,order_h.status ,order_h.from_apps ,
+			order_h.capster_id ,order_h.order_date ,ss_user."name" as capster_name,ss_user.file_id ,sa_file_upload.file_name,sa_file_upload.file_path ,
+			(select sum(order_d.price ) from order_d where order_d.order_id = order_h.order_id ) as price FROM "barber" inner join order_h 
+			on order_h.barber_id = barber.barber_id inner join ss_user on ss_user.user_id = order_h.capster_id left join sa_file_upload on sa_file_upload.file_id = ss_user.file_id WHERE (barber.owner_id = 9) LIMIT 5 OFFSET 0 []}
+[QUERY][(*repoOrderH)][repo_order_h.go:164]2020/08/20 12:12:44 &{SELECT barber.barber_id ,barber.barber_name ,order_h.order_id ,order_h.status ,order_h.from_apps ,
+	order_h.capster_id ,order_h.order_date ,ss_user."name" as capster_name,ss_user.file_id ,sa_file_upload.file_name,sa_file_upload.file_path ,
+	(select sum(order_d.price ) from order_d where order_d.order_id = order_h.order_id ) as price FROM "barber" inner join order_h 
+	on order_h.barber_id = barber.barber_id inner join ss_user on ss_user.user_id = order_h.capster_id left join sa_file_upload on sa_file_upload.file_id = ss_user.file_id WHERE (barber.owner_id = 9) []}
+[INFO][Res][response.go:63]2020/08/20 12:12:44 {"page":1,"total":0,"last_page":0,"define_size":"","define_column":"","all_column":"","data":[],"message":""}
+[INFO][(*ContAuth)][cont_auth.go:76]2020/08/20 12:52:40 {"account":"1111","pwd":"1"}
+[INFO][Res][response.go:31]2020/08/20 12:54:41 {"message":"Ok","data":{"data_user":{"barber_id":2,"barber_name":"Hunter","capster_id":9,"capster_name":"capster 1 update","email":"capster@gmail.com","file_id":2,"file_name":"1595093364_naruto.jpg","file_path":"/wwwroot/uploads/Profile/1595093364_naruto.jpg","telp":"1111"},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYXBzdGVyX2lkIjoiOSIsImNhcHN0ZXJfbmFtZSI6IjExMTEiLCJiYXJiZXJfaWQiOiIyIiwiZXhwIjoxNTk4MTYyMDgxLCJpc3MiOiJQcm9wZXJ0eUZyYW1ld29yayJ9.IkE_iPrUhpqj2HrWXENwyauOY1Xi7UY1pnF1WQ2Ca1o"}}

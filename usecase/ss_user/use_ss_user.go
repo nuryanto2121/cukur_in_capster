@@ -26,7 +26,7 @@ func (u *useSysUser) GetByEmailSaUser(ctx context.Context, email string) (result
 	defer cancel()
 
 	a := models.SsUser{}
-	result, err = u.repoUser.GetByAccount(email)
+	// result, err = u.repoUser.GetByAccount(email)
 	if err != nil {
 		return a, err
 	}

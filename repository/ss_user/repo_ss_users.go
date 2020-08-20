@@ -19,8 +19,12 @@ func NewRepoSysUser(Conn *gorm.DB) iusers.Repository {
 	return &repoSysUser{Conn}
 }
 
-func (db *repoSysUser) GetByAccount(Account string) (result models.SsUser, err error) {
-	query := db.Conn.Where("email = ?", Account).Or("telp = ?", Account).First(&result)
+func (db *repoSysUser) GetByAccount(Account string) (result models.LoginCapster, err error) {
+
+	// query := db.Conn.Where("email = ?", Account).Or("telp = ?", Account).First(&result)
+	query := db.Conn.Table("ss_user su").Select(`su.user_id as capster_id, su."name" as capster_name,su."password",su.email ,
+						su.telp ,su.file_id ,sf.file_name ,sf.file_path ,b.barber_id ,b.barber_name`).Joins(`inner join barber_capster bc 
+						on su.user_id = bc.capster_id`).Joins(`inner join barber b on b.barber_id = bc.barber_id `).Joins(`left join sa_file_upload sf on sf.file_id =su.file_id`).Where(`su.email = ?`, Account).Or(`su.telp = ?`, Account).First(&result)
 	log.Info(fmt.Sprintf("%v", query.QueryExpr()))
 	// logger.Query(fmt.Sprintf("%v", query.QueryExpr()))
 	err = query.Error

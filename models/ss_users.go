@@ -11,7 +11,7 @@ type SsUser struct {
 	Email     string    `json:"email" gorm:"type:varchar(60)"`
 	IsActive  bool      `json:"is_active" gorm:"type:boolean"`
 	JoinDate  time.Time `json:"join_date" gorm:"type:timestamp(0);default:now()"`
-	Password  string    `json:"pwd" gorm:"type:varchar(150)"`
+	Password  string    `json:"password" gorm:"type:varchar(150)"`
 	FileID    int       `json:"file_id" gorm:"type:integer"`
 	UserType  string    `json:"user_type" gorm:"type:varchar(10)"`
 	UserInput string    `json:"user_input" gorm:"type:varchar(20)"`
@@ -32,4 +32,17 @@ type UpdateUser struct {
 	Email string `json:"email" valid:"Required"`
 	Telp  string `json:"telp"`
 	Name  string `json:"name" valid:"Required"`
+}
+
+type LoginCapster struct {
+	CapsterID   int    `json:"capster_id"`
+	CapsterName string `json:"capster_name"`
+	Password    string `json:"password"`
+	Email       string `json:"email"`
+	Telp        string `json:"telp"`
+	FileID      int    `json:"file_id"`
+	FileName    string `json:"file_name"`
+	FilePath    string `json:"file_path"`
+	BarberID    int    `json:"barber_id"`
+	BarberName  string `json:"barber_name"`
 }
