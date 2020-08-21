@@ -21,7 +21,7 @@ type OrderH struct {
 type OrderPost struct {
 	// BarberID     int          `json:"barber_id" valid:"Required"`
 	// CapsterID    int          `json:"capster_id,omitempty"`
-	OrderDate    int          `json:"order_date" valid:"Required"`
+	OrderDate    int          `json:"order_date,omitempty"`
 	UserID       int          `json:"user_id,omitempty"`
 	CustomerName string       `json:"customer_name" valid:"Required"`
 	Telp         string       `json:"telp,omitempty"`

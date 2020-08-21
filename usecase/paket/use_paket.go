@@ -2,11 +2,11 @@ package usepaket
 
 import (
 	"context"
+	"fmt"
 	"math"
 	ipaket "nuryanto2121/cukur_in_capster/interface/paket"
 	"nuryanto2121/cukur_in_capster/models"
-	querywhere "nuryanto2121/cukur_in_capster/pkg/query"
-	"reflect"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"time"
 )
 
@@ -15,7 +15,7 @@ type usePaket struct {
 	contextTimeOut time.Duration
 }
 
-func NewUserMPaket(a ipaket.Repository, timeout time.Duration) ipaket.Usecase {
+func NewUsePaket(a ipaket.Repository, timeout time.Duration) ipaket.Usecase {
 	return &usePaket{repoPaket: a, contextTimeOut: timeout}
 }
 
@@ -29,17 +29,17 @@ func (u *usePaket) GetDataBy(ctx context.Context, ID int) (result *models.Paket,
 	}
 	return result, nil
 }
-func (u *usePaket) GetList(ctx context.Context, queryparam models.ParamList) (result models.ResponseModelList, err error) {
+func (u *usePaket) GetList(ctx context.Context, Claims util.Claims, queryparam models.ParamList) (result models.ResponseModelList, err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	var tUser = models.Paket{}
+	// var tUser = models.Paket{}
 	/*membuat Where like dari struct*/
 	if queryparam.Search != "" {
-		value := reflect.ValueOf(tUser)
-		types := reflect.TypeOf(&tUser)
-		queryparam.Search = querywhere.GetWhereLikeStruct(value, types, queryparam.Search, "")
+		queryparam.Search = fmt.Sprintf("lower(paket_name) LIKE '%%%s%%' ", queryparam.Search)
 	}
+
+	queryparam.InitSearch = fmt.Sprintf(`owner_id = %s`, Claims.OwnerID)
 	result.Data, err = u.repoPaket.GetList(queryparam)
 	if err != nil {
 		return result, err

@@ -3,6 +3,7 @@ package ipaket
 import (
 	"context"
 	"nuryanto2121/cukur_in_capster/models"
+	util "nuryanto2121/cukur_in_capster/pkg/utils"
 )
 
 type Repository interface {
@@ -16,7 +17,7 @@ type Repository interface {
 
 type Usecase interface {
 	GetDataBy(ctx context.Context, ID int) (result *models.Paket, err error)
-	GetList(ctx context.Context, queryparam models.ParamList) (result models.ResponseModelList, err error)
+	GetList(ctx context.Context, Claims util.Claims, queryparam models.ParamList) (result models.ResponseModelList, err error)
 	// Create(ctx context.Context, data *models.Paket) error
 	// Update(ctx context.Context, ID int, data interface{}) (err error)
 	// Delete(ctx context.Context, ID int) (err error)

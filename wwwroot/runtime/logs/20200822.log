@@ -1,0 +1,5 @@
+[QUERY][(*repoOrderH)][repo_order_h.go:35]2020/08/22 00:17:28 &{SELECT * FROM "order_h"  WHERE (order_id = ? ) [4]}
+[INFO][Res][response.go:31]2020/08/22 00:19:36 {"message":"unsupported destination, should be slice or struct","data":null}
+[QUERY][(*repoOrderH)][repo_order_h.go:36]2020/08/22 00:20:14 &{SELECT * FROM "order_h"  WHERE "order_h"."order_id" = ? AND ((order_id = ? )) [4 4]}
+[QUERY][(*repoOrderD)][repo_order_d.go:27]2020/08/22 00:20:51 &{SELECT * FROM "order_d"  WHERE (order_id = ? ) [4]}
+[INFO][Res][response.go:31]2020/08/22 00:21:16 {"message":"Ok","data":{"customer_name":"Dadang","data_detail":[{"order_d_id":4,"barber_id":2,"order_id":4,"paket_id":1,"paket_name":"PBA","durasi_start":10,"durasi_end":30,"price":50000,"user_input":"9","user_edit":"9","time_input":"2020-08-21T23:49:13Z","time_Edit":"2020-08-21T23:49:13Z"}],"order_date":1598028553,"order_id":4,"status":"N","telp":"11"}}

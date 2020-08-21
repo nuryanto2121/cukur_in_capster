@@ -99,15 +99,15 @@ func (u *ContPaket) GetList(e echo.Context) error {
 	if httpCode != 200 {
 		return appE.ResponseErrorList(http.StatusBadRequest, errMsg, responseList)
 	}
-	// claims, err := app.GetClaims(e)
-	// if err != nil {
-	// 	return appE.ResponseErrorList(http.StatusBadRequest, fmt.Sprintf("%v", err), responseList)
-	// }
+	claims, err := app.GetClaims(e)
+	if err != nil {
+		return appE.ResponseErrorList(http.StatusBadRequest, fmt.Sprintf("%v", err), responseList)
+	}
 	// if !claims.IsAdmin {
 	// paramquery.InitSearch = " owner_id = " + claims.UserID
 	// }
 
-	responseList, err = u.usePaket.GetList(ctx, paramquery)
+	responseList, err = u.usePaket.GetList(ctx, claims, paramquery)
 	if err != nil {
 		// return e.JSON(http.StatusBadRequest, err.Error())
 		return appE.ResponseErrorList(tool.GetStatusCode(err), fmt.Sprintf("%v", err), responseList)

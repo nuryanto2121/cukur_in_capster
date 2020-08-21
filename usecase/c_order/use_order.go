@@ -31,12 +31,26 @@ func (u *useOrder) GetDataBy(ctx context.Context, Claims util.Claims, ID int) (i
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	result, err := u.repoOrderH.GetDataBy(ID)
+	dataHeader, err := u.repoOrderH.GetDataBy(ID)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
-	return result, nil
+	dataDetail, err := u.repoOrderD.GetDataBy(ID)
+	if err != nil {
+		return nil, err
+	}
+	response := map[string]interface{}{
+		"from_apps":     dataHeader.FromApps,
+		"customer_name": dataHeader.CustomerName,
+		"telp":          dataHeader.Telp,
+		"order_date":    dataHeader.OrderDate,
+		"status":        dataHeader.Status,
+		"order_id":      dataHeader.OrderID,
+		"data_detail":   dataDetail,
+	}
+
+	return response, nil
 }
 func (u *useOrder) GetList(ctx context.Context, Claims util.Claims, queryparam models.ParamList) (result models.ResponseModelList, err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
@@ -73,6 +87,9 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	err = mapstructure.Decode(data, &mOrder)
 	if err != nil {
 		return err
+	}
+	if data.OrderDate == 0 {
+		mOrder.OrderDate = int(util.GetTimeNow().Unix())
 	}
 	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"

@@ -12,6 +12,10 @@ import (
 	_repoFile "nuryanto2121/cukur_in_capster/repository/ss_fileupload"
 	_useFile "nuryanto2121/cukur_in_capster/usecase/ss_fileupload"
 
+	_saPaketcont "nuryanto2121/cukur_in_capster/controllers/paket"
+	_repoPaket "nuryanto2121/cukur_in_capster/repository/paket"
+	_usePaket "nuryanto2121/cukur_in_capster/usecase/paket"
+
 	_contUser "nuryanto2121/cukur_in_capster/controllers/user"
 	_repoUser "nuryanto2121/cukur_in_capster/repository/ss_user"
 	_useUser "nuryanto2121/cukur_in_capster/usecase/ss_user"
@@ -41,6 +45,10 @@ func (e *EchoRoutes) InitialRouter() {
 	repoFile := _repoFile.NewRepoFileUpload(postgresdb.Conn)
 	useFile := _useFile.NewSaFileUpload(repoFile, timeoutContext)
 	_saFilecont.NewContFileUpload(e.E, useFile)
+
+	repoPaket := _repoPaket.NewRepoPaket(postgresdb.Conn)
+	usePaket := _usePaket.NewUsePaket(repoPaket, timeoutContext)
+	_saPaketcont.NewContPaket(e.E, usePaket)
 
 	repoOrderD := _repoOrderd.NewRepoOrderD(postgresdb.Conn)
 	repoOrder := _repoOrder.NewRepoOrderH(postgresdb.Conn)

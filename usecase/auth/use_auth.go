@@ -37,7 +37,7 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 	}
 	// DataFile, err := u.repoFile.GetBySaFileUpload(ctx, DataCapster.FileID)
 
-	token, err := util.GenerateToken(DataCapster.CapsterID, dataLogin.Account, DataCapster.BarberID)
+	token, err := util.GenerateToken(DataCapster.CapsterID, DataCapster.OwnerID, DataCapster.BarberID)
 	if err != nil {
 		return nil, err
 	}
@@ -45,6 +45,8 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 	redisdb.AddSession(token, DataCapster.CapsterID, 0)
 
 	restUser := map[string]interface{}{
+		"owner_id":     DataCapster.OwnerID,
+		"owner_name":   DataCapster.OwnerName,
 		"barber_id":    DataCapster.BarberID,
 		"barber_name":  DataCapster.BarberName,
 		"capster_id":   DataCapster.CapsterID,

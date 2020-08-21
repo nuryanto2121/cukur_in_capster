@@ -45,4 +45,6 @@ type LoginCapster struct {
 	FilePath    string `json:"file_path"`
 	BarberID    int    `json:"barber_id"`
 	BarberName  string `json:"barber_name"`
+	OwnerID     int    `json:"owner_id"`
+	OwnerName   string `json:"owner_name"`
 }

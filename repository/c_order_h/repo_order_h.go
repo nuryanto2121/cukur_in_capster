@@ -18,20 +18,21 @@ func NewRepoOrderH(Conn *gorm.DB) iorder_h.Repository {
 	return &repoOrderH{Conn}
 }
 
-func (db *repoOrderH) GetDataBy(ID int) (result models.OrderDGet, err error) {
+func (db *repoOrderH) GetDataBy(ID int) (result *models.OrderH, err error) {
 	var (
 		logger = logging.Logger{}
-		data   models.OrderDGet
+		mOrder = &models.OrderH{}
 	)
-	query := db.Conn.Raw(`select barber.barber_name ,order_h.capster_id ,ss_user."name" as capster_name,
-					sa_file_upload.file_id ,sa_file_upload.file_name,sa_file_upload.file_path ,
-					order_d.paket_id ,order_d.paket_name ,order_d.price ,order_d.durasi_start,order_d.durasi_end
-				from order_h inner join order_d 
-				on order_h.order_id = order_d.order_id 
-				inner join barber on barber.barber_id =order_h.order_id 
-				inner join ss_user on ss_user.user_id = order_h.capster_id
-				left join sa_file_upload on sa_file_upload.file_id = ss_user.file_id
-				where order_h.order_id = ? `, ID).Scan(&data) //Find(&result)
+	// query := db.Conn.Raw(`select barber.barber_name ,order_h.capster_id ,ss_user."name" as capster_name,
+	// 				sa_file_upload.file_id ,sa_file_upload.file_name,sa_file_upload.file_path ,
+	// 				order_d.paket_id ,order_d.paket_name ,order_d.price ,order_d.durasi_start,order_d.durasi_end
+	// 			from order_h inner join order_d
+	// 			on order_h.order_id = order_d.order_id
+	// 			inner join barber on barber.barber_id =order_h.order_id
+	// 			inner join ss_user on ss_user.user_id = order_h.capster_id
+	// 			left join sa_file_upload on sa_file_upload.file_id = ss_user.file_id
+	// 			where order_h.order_id = ? `, ID).Scan(&data) //Find(&result)
+	query := db.Conn.Where("order_id = ? ", ID).Find(mOrder)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr()))
 	err = query.Error
 	if err != nil {
@@ -40,7 +41,7 @@ func (db *repoOrderH) GetDataBy(ID int) (result models.OrderDGet, err error) {
 		}
 		return result, err
 	}
-	return data, nil
+	return mOrder, nil
 }
 func (db *repoOrderH) GetList(queryparam models.ParamList) (result []*models.OrderList, err error) {
 
