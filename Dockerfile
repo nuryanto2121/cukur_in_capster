@@ -46,7 +46,7 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/config.json .
 
 # Expose port 8080 to the outside world
-EXPOSE 9191
+EXPOSE 9192
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]
