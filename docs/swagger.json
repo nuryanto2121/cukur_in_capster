@@ -12,7 +12,7 @@
         "version": "1.0"
     },
     "paths": {
-        "/api.v1/capster/auth/change_password": {
+        "/capster/auth/change_password": {
             "post": {
                 "produces": [
                     "application/json"
@@ -57,7 +57,7 @@
                 }
             }
         },
-        "/api.v1/capster/auth/forgot": {
+        "/capster/auth/forgot": {
             "post": {
                 "produces": [
                     "application/json"
@@ -102,7 +102,7 @@
                 }
             }
         },
-        "/api.v1/capster/auth/login": {
+        "/capster/auth/login": {
             "post": {
                 "produces": [
                     "application/json"
@@ -147,7 +147,7 @@
                 }
             }
         },
-        "/api.v1/capster/auth/register": {
+        "/capster/auth/register": {
             "post": {
                 "produces": [
                     "application/json"
@@ -192,7 +192,7 @@
                 }
             }
         },
-        "/api.v1/capster/auth/verify": {
+        "/capster/auth/verify": {
             "post": {
                 "produces": [
                     "application/json"
@@ -237,7 +237,7 @@
                 }
             }
         },
-        "/api.v1/capster/order": {
+        "/capster/order": {
             "get": {
                 "security": [
                     {
@@ -357,7 +357,7 @@
                 }
             }
         },
-        "/api.v1/capster/order/{id}": {
+        "/capster/order/{id}": {
             "get": {
                 "security": [
                     {
@@ -504,7 +504,7 @@
                 }
             }
         },
-        "/api.v1/capster/paket": {
+        "/capster/paket": {
             "get": {
                 "security": [
                     {
@@ -576,7 +576,7 @@
                 }
             }
         },
-        "/api.v1/capster/paket/{id}": {
+        "/capster/paket/{id}": {
             "get": {
                 "security": [
                     {
@@ -623,7 +623,7 @@
                 }
             }
         },
-        "/api.v1/capster/user": {
+        "/capster/user": {
             "get": {
                 "security": [
                     {
@@ -743,7 +743,7 @@
                 }
             }
         },
-        "/api.v1/capster/user/{id}": {
+        "/capster/user/{id}": {
             "get": {
                 "security": [
                     {
@@ -890,7 +890,7 @@
                 }
             }
         },
-        "/api.v1/fileupload": {
+        "/fileupload": {
             "post": {
                 "security": [
                     {

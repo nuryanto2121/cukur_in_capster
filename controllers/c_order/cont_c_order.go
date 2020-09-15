@@ -25,7 +25,7 @@ func NewContOrder(e *echo.Echo, a icorder.Usecase) {
 		useOrder: a,
 	}
 
-	r := e.Group("/api.v1/capster/order")
+	r := e.Group("/capster/order")
 	r.Use(midd.JWT)
 	r.GET("/:id", controller.GetDataBy)
 	r.GET("", controller.GetList)
@@ -43,7 +43,7 @@ func NewContOrder(e *echo.Echo, a icorder.Usecase) {
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
 // @Success 200 {object} tool.ResponseModel
-// @Router /api.v1/capster/order/{id} [get]
+// @Router /capster/order/{id} [get]
 func (u *ContOrder) GetDataBy(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -87,7 +87,7 @@ func (u *ContOrder) GetDataBy(e echo.Context) error {
 // @Param initsearch query string false "InitSearch"
 // @Param sortfield query string false "SortField"
 // @Success 200 {object} models.ResponseModelList
-// @Router /api.v1/capster/order [get]
+// @Router /capster/order [get]
 func (u *ContOrder) GetList(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -135,7 +135,7 @@ func (u *ContOrder) GetList(e echo.Context) error {
 // @Param Version header string true "OS Device"
 // @Param req body models.OrderPost true "req param #changes are possible to adjust the form of the registration form from frontend"
 // @Success 200 {object} tool.ResponseModel
-// @Router /api.v1/capster/order [post]
+// @Router /capster/order [post]
 func (u *ContOrder) Create(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -178,7 +178,7 @@ func (u *ContOrder) Create(e echo.Context) error {
 // @Param id path string true "ID"
 // @Param req body models.OrderPost true "req param #changes are possible to adjust the form of the registration form from frontend"
 // @Success 200 {object} tool.ResponseModel
-// @Router /api.v1/capster/order/{id} [put]
+// @Router /capster/order/{id} [put]
 func (u *ContOrder) Update(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -227,7 +227,7 @@ func (u *ContOrder) Update(e echo.Context) error {
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
 // @Success 200 {object} tool.ResponseModel
-// @Router /api.v1/capster/order/{id} [delete]
+// @Router /capster/order/{id} [delete]
 func (u *ContOrder) Delete(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {

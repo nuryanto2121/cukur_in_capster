@@ -130,7 +130,7 @@ info:
   title: Starter
   version: "1.0"
 paths:
-  /api.v1/capster/auth/change_password:
+  /capster/auth/change_password:
     post:
       parameters:
       - description: OS Device
@@ -161,7 +161,7 @@ paths:
       summary: Change Password
       tags:
       - Auth
-  /api.v1/capster/auth/forgot:
+  /capster/auth/forgot:
     post:
       parameters:
       - description: OS Device
@@ -192,7 +192,7 @@ paths:
       summary: Forgot Password
       tags:
       - Auth
-  /api.v1/capster/auth/login:
+  /capster/auth/login:
     post:
       parameters:
       - description: OS Device
@@ -223,7 +223,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /api.v1/capster/auth/register:
+  /capster/auth/register:
     post:
       parameters:
       - description: OS Device
@@ -254,7 +254,7 @@ paths:
       summary: Register
       tags:
       - Auth
-  /api.v1/capster/auth/verify:
+  /capster/auth/verify:
     post:
       parameters:
       - description: OS Device
@@ -285,7 +285,7 @@ paths:
       summary: Verify
       tags:
       - Auth
-  /api.v1/capster/order:
+  /capster/order:
     get:
       parameters:
       - description: OS Device
@@ -364,7 +364,7 @@ paths:
       summary: Add Order
       tags:
       - Order
-  /api.v1/capster/order/{id}:
+  /capster/order/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -460,7 +460,7 @@ paths:
       summary: Rubah Profile
       tags:
       - Order
-  /api.v1/capster/paket:
+  /capster/paket:
     get:
       parameters:
       - description: OS Device
@@ -507,7 +507,7 @@ paths:
       summary: GetList Paket
       tags:
       - Paket
-  /api.v1/capster/paket/{id}:
+  /capster/paket/{id}:
     get:
       parameters:
       - description: OS Device
@@ -537,7 +537,7 @@ paths:
       summary: GetById
       tags:
       - Paket
-  /api.v1/capster/user:
+  /capster/user:
     get:
       parameters:
       - description: OS Device
@@ -616,7 +616,7 @@ paths:
       summary: Add User
       tags:
       - User
-  /api.v1/capster/user/{id}:
+  /capster/user/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -712,7 +712,7 @@ paths:
       summary: Rubah Profile
       tags:
       - User
-  /api.v1/fileupload:
+  /fileupload:
     post:
       consumes:
       - multipart/form-data
