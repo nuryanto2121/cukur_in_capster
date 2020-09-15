@@ -36,10 +36,14 @@ func (u *usePaket) GetList(ctx context.Context, Claims util.Claims, queryparam m
 	// var tUser = models.Paket{}
 	/*membuat Where like dari struct*/
 	if queryparam.Search != "" {
-		queryparam.Search = fmt.Sprintf("lower(paket_name) LIKE '%%%s%%' ", queryparam.Search)
+		queryparam.Search = fmt.Sprintf("paket_name iLIKE '%%%s%%' OR descs iLIKE '%%%s%%'", queryparam.Search, queryparam.Search)
 	}
 
-	queryparam.InitSearch = fmt.Sprintf(`owner_id = %s`, Claims.OwnerID)
+	if queryparam.InitSearch != "" {
+		queryparam.InitSearch += " AND owner_id = " + Claims.OwnerID
+	} else {
+		queryparam.InitSearch = " owner_id = " + Claims.OwnerID
+	}
 	result.Data, err = u.repoPaket.GetList(queryparam)
 	if err != nil {
 		return result, err

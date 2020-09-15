@@ -88,9 +88,7 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	if err != nil {
 		return err
 	}
-	if data.OrderDate == 0 {
-		mOrder.OrderDate = int(util.GetTimeNow().Unix())
-	}
+	mOrder.OrderDate = data.OrderDate
 	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"
 	mOrder.FromApps = false

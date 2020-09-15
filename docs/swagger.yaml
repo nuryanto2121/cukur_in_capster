@@ -45,7 +45,7 @@ definitions:
         description: |-
           BarberID     int          `json:"barber_id" valid:"Required"`
           CapsterID    int          `json:"capster_id,omitempty"`
-        type: integer
+        type: string
       paket_ids:
         items:
           $ref: '#/definitions/models.OrderDPost'
