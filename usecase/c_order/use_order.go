@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"math"
+	repofunction "nuryanto2121/cukur_in_capster/repository/function"
+
 	iorderd "nuryanto2121/cukur_in_capster/interface/c_order_d"
 	iorderh "nuryanto2121/cukur_in_capster/interface/c_order_h"
 	"nuryanto2121/cukur_in_capster/models"
@@ -88,11 +90,22 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	if err != nil {
 		return err
 	}
+	fn := &repofunction.FN{
+		Claims: Claims,
+	}
+	dataBarber, err := fn.GetBarberData()
+	if err != nil {
+		return err
+	}
 	mOrder.OrderDate = data.OrderDate
 	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"
 	mOrder.FromApps = false
 	mOrder.CapsterID, _ = strconv.Atoi(Claims.CapsterID)
+	mOrder.OrderNo, err = fn.GenTransactionNo(dataBarber.BarberCd)
+	if err != nil {
+		return err
+	}
 
 	mOrder.UserInput = Claims.CapsterID
 	mOrder.UserEdit = Claims.CapsterID
