@@ -10,6 +10,7 @@ type OrderH struct {
 	OrderDate    time.Time `json:"order_date" gorm:"type:timestamp(0) without time zone"`
 	UserID       int       `json:"user_id" gorm:"type:integer"`
 	CustomerName string    `json:"customer_name" gorm:"type:varchar(60);not null"`
+	Email        string    `json:"email" gorm:"type:varchar(60)"`
 	Telp         string    `json:"telp" gorm:"type:varchar(20)"`
 	Status       string    `json:"status" gorm:"type:varchar(1)"`
 	FromApps     bool      `json:"from_apps" gorm:"type:boolean"`
@@ -25,6 +26,7 @@ type OrderPost struct {
 	OrderDate    time.Time    `json:"order_date,omitempty"`
 	UserID       int          `json:"user_id,omitempty"`
 	CustomerName string       `json:"customer_name" valid:"Required"`
+	Email        string       `json:"email,omitempty"`
 	Telp         string       `json:"telp,omitempty"`
 	Pakets       []OrderDPost `json:"paket_ids"`
 }
@@ -48,4 +50,7 @@ type OrderList struct {
 	// Weeks       int       `json:"weeks"`
 	// Months      int       `json:"months"`
 	// Years       int       `json:"years"`
+}
+type OrderStatus struct {
+	Status string `json:"status" `
 }

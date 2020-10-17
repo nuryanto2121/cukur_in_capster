@@ -10,7 +10,7 @@ type Repository interface {
 	GetDataBy(ID int) (result *models.OrderH, err error)
 	GetList(queryparam models.ParamList) (result []*models.OrderList, err error)
 	Create(data *models.OrderH) (err error)
-	Update(ID int, data interface{}) (err error)
+	Update(ID int, data map[string]interface{}) (err error)
 	Delete(ID int) (err error)
 	Count(queryparam models.ParamList) (result int, err error)
 	SumPriceDetail(queryparam models.ParamList) (result float32, err error)
@@ -21,6 +21,6 @@ type Usecase interface {
 	GetList(ctx context.Context, Claims util.Claims, queryparam models.ParamList) (result models.ResponseModelList, err error)
 	GetSumPrice(ctx context.Context, Claims util.Claims, queryparam models.ParamList) (result float32, err error)
 	Create(ctx context.Context, Claims util.Claims, data *models.OrderPost) error
-	Update(ctx context.Context, Claims util.Claims, ID int, data models.OrderPost) (err error)
+	Update(ctx context.Context, Claims util.Claims, ID int, data models.OrderStatus) (err error)
 	Delete(ctx context.Context, Claims util.Claims, ID int) (err error)
 }

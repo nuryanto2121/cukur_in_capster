@@ -41,6 +41,8 @@ definitions:
     properties:
       customer_name:
         type: string
+      email:
+        type: string
       order_date:
         description: |-
           BarberID     int          `json:"barber_id" valid:"Required"`
@@ -54,6 +56,11 @@ definitions:
         type: string
       user_id:
         type: integer
+    type: object
+  models.OrderStatus:
+    properties:
+      status:
+        type: string
     type: object
   models.RegisterForm:
     properties:
@@ -126,7 +133,6 @@ info:
     name: Nuryanto
     url: https://www.linkedin.com/in/nuryanto-1b2721156/
   description: Backend REST API for golang nuryanto2121
-  license: {}
   title: Starter
   version: "1.0"
 paths:
@@ -143,14 +149,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.ResetPasswd'
-          type: object
       produces:
       - application/json
       responses:
@@ -174,14 +178,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.ForgotForm'
-          type: object
       produces:
       - application/json
       responses:
@@ -205,14 +207,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.LoginForm'
-          type: object
       produces:
       - application/json
       responses:
@@ -236,14 +236,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.RegisterForm'
-          type: object
       produces:
       - application/json
       responses:
@@ -267,14 +265,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.VerifyForm'
-          type: object
       produces:
       - application/json
       responses:
@@ -344,14 +340,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.OrderPost'
-          type: object
       produces:
       - application/json
       responses:
@@ -440,14 +434,12 @@ paths:
         name: id
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
-          $ref: '#/definitions/models.OrderPost'
-          type: object
+          $ref: '#/definitions/models.OrderStatus'
       produces:
       - application/json
       responses:
@@ -457,7 +449,7 @@ paths:
             $ref: '#/definitions/tool.ResponseModel'
       security:
       - ApiKeyAuth: []
-      summary: Rubah Profile
+      summary: Update Status Order
       tags:
       - Order
   /capster/paket:
@@ -596,14 +588,12 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.AddUser'
-          type: object
       produces:
       - application/json
       responses:
@@ -692,14 +682,12 @@ paths:
         name: id
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration
-          form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/models.UpdateUser'
-          type: object
       produces:
       - application/json
       responses:

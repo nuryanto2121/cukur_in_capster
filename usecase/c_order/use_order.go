@@ -42,9 +42,18 @@ func (u *useOrder) GetDataBy(ctx context.Context, Claims util.Claims, ID int) (i
 	if err != nil {
 		return nil, err
 	}
+	fn := &repofunction.FN{
+		Claims: Claims,
+	}
+	dataBarber, err := fn.GetBarberData()
+	if err != nil {
+		return nil, err
+	}
 	response := map[string]interface{}{
 		"from_apps":     dataHeader.FromApps,
+		"barber_name":   dataBarber.BarberName,
 		"customer_name": dataHeader.CustomerName,
+		"email":         dataHeader.Email,
 		"telp":          dataHeader.Telp,
 		"order_date":    dataHeader.OrderDate,
 		"status":        dataHeader.Status,
@@ -94,7 +103,7 @@ func (u *useOrder) GetSumPrice(ctx context.Context, Claims util.Claims, querypar
 	if queryparam.InitSearch != "" {
 		queryparam.InitSearch += fmt.Sprintf(" AND order_h.capster_id = %s", Claims.CapsterID)
 	} else {
-		queryparam.InitSearch = fmt.Sprintf(" order_h.capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch = fmt.Sprintf(" v_order_h.capster_id = %s", Claims.CapsterID)
 	}
 	result, err = u.repoOrderH.SumPriceDetail(queryparam)
 	if err != nil {
@@ -156,27 +165,15 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	return nil
 
 }
-func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data models.OrderPost) (err error) {
+func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data models.OrderStatus) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	var (
-		mOrder models.OrderH
-	)
-
-	// mapping to struct model saRole
-	err = mapstructure.Decode(data, &mOrder)
-	if err != nil {
-		return err
-	}
-	err = u.repoOrderH.Update(ID, mOrder)
-	if err != nil {
-		return err
+	var dataUpdate = map[string]interface{}{
+		"password": data.Status,
 	}
 
-	//delete then insert detail
-
-	err = u.repoOrderD.Delete(ID)
+	err = u.repoOrderH.Update(ID, dataUpdate)
 	if err != nil {
 		return err
 	}

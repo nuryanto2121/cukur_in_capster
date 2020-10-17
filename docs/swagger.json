@@ -8,7 +8,6 @@
             "url": "https://www.linkedin.com/in/nuryanto-1b2721156/",
             "email": "nuryantofattih@gmail.com"
         },
-        "license": {},
         "version": "1.0"
     },
     "paths": {
@@ -42,7 +41,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.ResetPasswd"
                         }
                     }
@@ -87,7 +85,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.ForgotForm"
                         }
                     }
@@ -132,7 +129,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.LoginForm"
                         }
                     }
@@ -177,7 +173,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.RegisterForm"
                         }
                     }
@@ -222,7 +217,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.VerifyForm"
                         }
                     }
@@ -342,7 +336,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.OrderPost"
                         }
                     }
@@ -415,7 +408,7 @@
                 "tags": [
                     "Order"
                 ],
-                "summary": "Rubah Profile",
+                "summary": "Update Status Order",
                 "parameters": [
                     {
                         "type": "string",
@@ -444,8 +437,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/models.OrderPost"
+                            "$ref": "#/definitions/models.OrderStatus"
                         }
                     }
                 ],
@@ -728,7 +720,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.AddUser"
                         }
                     }
@@ -830,7 +821,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/models.UpdateUser"
                         }
                     }
@@ -1015,6 +1005,9 @@
                 "customer_name": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
                 "order_date": {
                     "description": "BarberID     int          `json:\"barber_id\" valid:\"Required\"`\nCapsterID    int          `json:\"capster_id,omitempty\"`",
                     "type": "string"
@@ -1030,6 +1023,14 @@
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.OrderStatus": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },

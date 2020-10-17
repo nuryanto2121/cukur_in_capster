@@ -175,15 +175,15 @@ func (u *ContOrder) Create(e echo.Context) error {
 	return appE.Response(http.StatusCreated, "Ok", nil)
 }
 
-// UpdateSaOrder :
-// @Summary Rubah Profile
+// UpdateStatusOrder :
+// @Summary Update Status Order
 // @Security ApiKeyAuth
 // @Tags Order
 // @Produce json
 // @Param OS header string true "OS Device"
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
-// @Param req body models.OrderPost true "req param #changes are possible to adjust the form of the registration form from frontend"
+// @Param req body models.OrderStatus true "req param #changes are possible to adjust the form of the registration form from frontend"
 // @Success 200 {object} tool.ResponseModel
 // @Router /capster/order/{id} [put]
 func (u *ContOrder) Update(e echo.Context) error {
@@ -198,7 +198,7 @@ func (u *ContOrder) Update(e echo.Context) error {
 		err    error
 		// valid  validation.Validation                 // wajib
 		id   = e.Param("id") //kalo bukan int => 0
-		form = models.OrderPost{}
+		form = models.OrderStatus{}
 		// form    models.OrderPost
 	)
 
