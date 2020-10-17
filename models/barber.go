@@ -5,7 +5,7 @@ import "time"
 type Barber struct {
 	BarberID       int       `json:"barber_id" gorm:"primary_key;auto_increment:true"`
 	OwnerID        int       `json:"owner_id" gorm:"PRIMARY_KEY;type:integer"`
-	BarberCd       string    `json:"berber_cd" gorm:"type:varchar(4)"`
+	BarberCd       string    `json:"barber_cd" gorm:"type:varchar(4)"`
 	BarberName     string    `json:"barber_name" gorm:"type:varchar(60)"`
 	Address        string    `json:"address" gorm:"type:varchar(150)"`
 	FileID         int       `json:"file_id" gorm:"type:integer"`

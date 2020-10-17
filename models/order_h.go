@@ -30,20 +30,22 @@ type OrderPost struct {
 }
 
 type OrderList struct {
-	OwnerID     int       `json:"owner_id"`
-	BarberID    int       `json:"barber_id" valid:"Required"`
-	BarberName  string    `json:"barber_name"`
-	OrderID     int       `json:"order_id"`
-	Status      string    `json:"status" `
-	FromApps    bool      `json:"from_apps"`
-	CapsterID   int       `json:"capster_id,omitempty"`
-	CapsterName string    `json:"capster_name"`
-	OrderDate   time.Time `json:"order_date" valid:"Required"`
-	FileID      int       `json:"file_id" `
-	FileName    string    `json:"file_name"`
-	FilePath    string    `json:"file_path"`
-	Price       float32   `json:"price" `
-	Weeks       int       `json:"weeks"`
-	Months      int       `json:"months"`
-	Years       int       `json:"years"`
+	OwnerID      int       `json:"owner_id"`
+	BarberID     int       `json:"barber_id" valid:"Required"`
+	BarberName   string    `json:"barber_name"`
+	OrderID      int       `json:"order_id"`
+	OrderNo      string    `json:"order_no"`
+	Status       string    `json:"status" `
+	FromApps     bool      `json:"from_apps"`
+	CapsterID    int       `json:"capster_id,omitempty"`
+	CapsterName  string    `json:"capster_name"`
+	CustomerName string    `json:"customer_name"`
+	OrderDate    time.Time `json:"order_date" valid:"Required"`
+	FileID       int       `json:"file_id" `
+	FileName     string    `json:"file_name"`
+	FilePath     string    `json:"file_path"`
+	Price        float32   `json:"price" `
+	// Weeks       int       `json:"weeks"`
+	// Months      int       `json:"months"`
+	// Years       int       `json:"years"`
 }
