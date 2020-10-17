@@ -170,7 +170,7 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 	defer cancel()
 
 	var dataUpdate = map[string]interface{}{
-		"password": data.Status,
+		"status": data.Status,
 	}
 
 	err = u.repoOrderH.Update(ID, dataUpdate)
