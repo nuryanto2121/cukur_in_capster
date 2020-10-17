@@ -3,7 +3,7 @@
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
 # Start from the latest golang base image
-FROM golang:1.12.8 as builder
+FROM golang:1.15.3 as builder
 
 # Add Maintainer Info
 LABEL maintainer="Nuryanto <nuryantofattih@gmail.com>"
@@ -12,7 +12,8 @@ LABEL maintainer="Nuryanto <nuryantofattih@gmail.com>"
 WORKDIR /app
 
 # Copy go mod , sum files config.json
-COPY go.mod go.sum config.json ./
+COPY config.json ./
+COPY go.mod go.sum ./
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
