@@ -76,21 +76,8 @@ func (db *repoOrderH) GetList(queryparam models.ParamList) (result []*models.Ord
 	// end where
 
 	// query := db.Conn.Where(sWhere).Offset(pageNum).Limit(pageSize).Order(orderBy).Find(&result)
-	query := db.Conn.Table("barber").Select(`
-						barber.barber_id ,barber.barber_name ,
-						order_h.order_id ,order_h.status ,
-						order_h.from_apps ,	order_h.capster_id ,
-						order_h.order_date ,ss_user.name as capster_name,
-						ss_user.file_id ,sa_file_upload.file_name,
-						sa_file_upload.file_path ,
-						(	select sum(order_d.price ) 
-							from order_d 
-							where order_d.order_id = order_h.order_id 
-						) as price,
-						order_h.customer_name ,order_h.order_no
-			`).Joins(`inner join order_h on order_h.barber_id = barber.barber_id
-			`).Joins(`inner join ss_user on ss_user.user_id = order_h.capster_id
-			`).Joins(`left join sa_file_upload on sa_file_upload.file_id = ss_user.file_id
+	query := db.Conn.Table("v_order_h").Select(`
+						*
 			`).Where(sWhere).Offset(pageNum).Limit(pageSize).Order(orderBy).Find(&result)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
 	err = query.Error
@@ -129,9 +116,7 @@ func (db *repoOrderH) SumPriceDetail(queryparam models.ParamList) (result float3
 	sWhere = strings.ReplaceAll(sWhere, "barber_id", "v_order_h.barber_id")
 
 	query := db.Conn.Table("v_order_h").Select(`
-	coalesce(sum(order_d.price ),0) as price
-	`).Joins(`inner join order_d 
-	on v_order_h.order_id = order_d.order_id
+	coalesce(sum(price ),0) as price
 	`).Where(sWhere).First(&op)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
 	err = query.Error

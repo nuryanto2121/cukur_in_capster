@@ -49,6 +49,12 @@ func (u *useOrder) GetDataBy(ctx context.Context, Claims util.Claims, ID int) (i
 	if err != nil {
 		return nil, err
 	}
+	var total_price float32 = 0
+
+	for _, dataDetail := range dataDetail {
+		total_price += dataDetail.Price
+	}
+
 	response := map[string]interface{}{
 		"from_apps":     dataHeader.FromApps,
 		"barber_name":   dataBarber.BarberName,
@@ -59,6 +65,7 @@ func (u *useOrder) GetDataBy(ctx context.Context, Claims util.Claims, ID int) (i
 		"status":        dataHeader.Status,
 		"order_id":      dataHeader.OrderID,
 		"data_detail":   dataDetail,
+		"total_price":   total_price,
 	}
 
 	return response, nil
@@ -72,9 +79,9 @@ func (u *useOrder) GetList(ctx context.Context, Claims util.Claims, queryparam m
 	}
 
 	if queryparam.InitSearch != "" {
-		queryparam.InitSearch += fmt.Sprintf(" AND order_h.capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch += fmt.Sprintf(" AND capster_id = %s", Claims.CapsterID)
 	} else {
-		queryparam.InitSearch = fmt.Sprintf("order_h.capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch = fmt.Sprintf("capster_id = %s", Claims.CapsterID)
 	}
 	result.Data, err = u.repoOrderH.GetList(queryparam)
 	if err != nil {
@@ -101,9 +108,9 @@ func (u *useOrder) GetSumPrice(ctx context.Context, Claims util.Claims, querypar
 	}
 
 	if queryparam.InitSearch != "" {
-		queryparam.InitSearch += fmt.Sprintf(" AND order_h.capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch += fmt.Sprintf(" AND capster_id = %s", Claims.CapsterID)
 	} else {
-		queryparam.InitSearch = fmt.Sprintf(" v_order_h.capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch = fmt.Sprintf(" capster_id = %s", Claims.CapsterID)
 	}
 	result, err = u.repoOrderH.SumPriceDetail(queryparam)
 	if err != nil {
