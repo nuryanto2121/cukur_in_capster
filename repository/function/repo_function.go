@@ -101,3 +101,22 @@ func (fn *FN) GetBarberData() (result *models.Barber, err error) {
 	}
 	return mBarber, nil
 }
+
+func (fn *FN) GetCapsterData() (result *models.SsUser, err error) {
+	var (
+		logger   = logging.Logger{}
+		mCapster = &models.SsUser{}
+		conn     *gorm.DB
+	)
+	conn = postgresdb.Conn
+	query := conn.Where("user_id = ? ", fn.Claims.CapsterID).Find(mCapster)
+	logger.Query(fmt.Sprintf("%v", query.QueryExpr()))
+	err = query.Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, models.ErrNotFound
+		}
+		return nil, err
+	}
+	return mCapster, nil
+}

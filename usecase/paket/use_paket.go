@@ -42,9 +42,22 @@ func (u *usePaket) GetList(ctx context.Context, Claims util.Claims, queryparam m
 	}
 
 	if queryparam.InitSearch != "" {
-		queryparam.InitSearch += " AND owner_id = " + Claims.OwnerID
+		queryparam.InitSearch += fmt.Sprintf(` 
+			AND owner_id = %s
+			AND paket_id in (
+				select bp.paket_id from barber_paket bp 
+				where bp.barber_id = %s
+			)
+		`, Claims.OwnerID, Claims.BarberID)
 	} else {
-		queryparam.InitSearch = " owner_id = " + Claims.OwnerID
+		queryparam.InitSearch = fmt.Sprintf(` 
+			owner_id = %s
+			AND paket_id in (
+				select bp.paket_id from barber_paket bp 
+				where bp.barber_id = %s
+			)
+		
+		`, Claims.OwnerID, Claims.BarberID)
 	}
 	result.Data, err = u.repoPaket.GetList(queryparam)
 	if err != nil {

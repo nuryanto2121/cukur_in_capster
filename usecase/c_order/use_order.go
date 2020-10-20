@@ -2,6 +2,7 @@ package useorder
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math"
 	repofunction "nuryanto2121/cukur_in_capster/repository/function"
@@ -135,8 +136,28 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 	}
 	dataBarber, err := fn.GetBarberData()
 	if err != nil {
+		if err == models.ErrNotFound {
+			return errors.New("Data Barber tidak ditemukan, Hubungi pemilik barber")
+		}
 		return err
 	}
+
+	dataCapster, err := fn.GetCapsterData()
+	if err != nil {
+		if err == models.ErrNotFound {
+			return errors.New("Data Capster tidak ditemukan, Hubungi pemilik barber")
+		}
+		return err
+	}
+
+	if !dataCapster.IsActive {
+		return errors.New("Tidak bisa transaksi, Akun anda tidak aktif")
+	}
+
+	if !dataBarber.IsActive {
+		return errors.New("Tidak bisa transaksi,Barber sedang tidak aktif")
+	}
+
 	mOrder.OrderDate = data.OrderDate
 	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"
