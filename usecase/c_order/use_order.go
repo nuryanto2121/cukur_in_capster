@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	repofunction "nuryanto2121/cukur_in_capster/repository/function"
+	"strings"
 
 	iorderd "nuryanto2121/cukur_in_capster/interface/c_order_d"
 	iorderh "nuryanto2121/cukur_in_capster/interface/c_order_h"
@@ -75,7 +76,7 @@ func (u *useOrder) GetList(ctx context.Context, Claims util.Claims, queryparam m
 	defer cancel()
 
 	if queryparam.Search != "" {
-		queryparam.Search = fmt.Sprintf("lower(order_name) LIKE '%%%s%%' ", queryparam.Search)
+		queryparam.Search = strings.ToLower(fmt.Sprintf("%%%s%%", queryparam.Search))
 	}
 
 	if queryparam.InitSearch != "" {
@@ -104,7 +105,7 @@ func (u *useOrder) GetSumPrice(ctx context.Context, Claims util.Claims, querypar
 	defer cancel()
 
 	if queryparam.Search != "" {
-		queryparam.Search = fmt.Sprintf("lower(order_name) LIKE '%%%s%%' ", queryparam.Search)
+		queryparam.Search = strings.ToLower(fmt.Sprintf("%%%s%%", queryparam.Search))
 	}
 
 	if queryparam.InitSearch != "" {

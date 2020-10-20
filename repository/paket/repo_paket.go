@@ -43,6 +43,7 @@ func (db *repoPaket) GetList(queryparam models.ParamList) (result []*models.Pake
 		sWhere   = ""
 		logger   = logging.Logger{}
 		orderBy  = queryparam.SortField
+		query    *gorm.DB
 	)
 	// pagination
 	if queryparam.Page > 0 {
@@ -66,22 +67,19 @@ func (db *repoPaket) GetList(queryparam models.ParamList) (result []*models.Pake
 
 	if queryparam.Search != "" {
 		if sWhere != "" {
-			sWhere += " and " + queryparam.Search
+			sWhere += " and (lower(paket_name) LIKE ? OR lower(descs) LIKE ?)" //+ queryparam.Search
 		} else {
-			sWhere += queryparam.Search
+			sWhere += "(lower(barber_name) LIKE ? OR lower(descs) LIKE ?)" //queryparam.Search
 		}
+		query = db.Conn.Where(sWhere, queryparam.Search, queryparam.Search).Offset(pageNum).Limit(pageSize).Order(orderBy).Find(&result)
+	} else {
+		query = db.Conn.Where(sWhere).Offset(pageNum).Limit(pageSize).Order(orderBy).Find(&result)
 	}
 
 	// end where
-	if pageNum >= 0 && pageSize > 0 {
-		query := db.Conn.Where(sWhere).Offset(pageNum).Limit(pageSize).Order(orderBy).Find(&result)
-		logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
-		err = query.Error
-	} else {
-		query := db.Conn.Where(sWhere).Order(orderBy).Find(&result)
-		logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
-		err = query.Error
-	}
+
+	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
+	err = query.Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -91,50 +89,25 @@ func (db *repoPaket) GetList(queryparam models.ParamList) (result []*models.Pake
 	}
 	return result, nil
 }
+func (db *repoPaket) Create(data *models.Paket) error {
+	var (
+		logger = logging.Logger{}
+		err    error
+	)
+	query := db.Conn.Create(data)
+	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
+	err = query.Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
-// func (db *repoPaket) Create(data *models.Paket) error {
-// 	var (
-// 		logger = logging.Logger{}
-// 		err    error
-// 	)
-// 	query := db.Conn.Create(data)
-// 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
-// 	err = query.Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-// func (db *repoPaket) Update(ID int, data interface{}) error {
-// 	var (
-// 		logger = logging.Logger{}
-// 		err    error
-// 	)
-// 	query := db.Conn.Model(models.Paket{}).Where("paket_id = ?", ID).Updates(data)
-// 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
-// 	err = query.Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-// func (db *repoPaket) Delete(ID int) error {
-// 	var (
-// 		logger = logging.Logger{}
-// 		err    error
-// 	)
-// 	query := db.Conn.Where("paket_id = ?", ID).Delete(&models.Paket{})
-// 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
-// 	err = query.Error
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
 func (db *repoPaket) Count(queryparam models.ParamList) (result int, err error) {
 	var (
 		sWhere = ""
 		logger = logging.Logger{}
+		query  *gorm.DB
 	)
 	result = 0
 
@@ -145,12 +118,16 @@ func (db *repoPaket) Count(queryparam models.ParamList) (result int, err error) 
 
 	if queryparam.Search != "" {
 		if sWhere != "" {
-			sWhere += " and " + queryparam.Search
+			sWhere += " and (lower(paket_name) LIKE ? OR lower(descs) LIKE ?)" //+ queryparam.Search
+		} else {
+			sWhere += "(lower(barber_name) LIKE ? OR lower(descs) LIKE ?)" //queryparam.Search
 		}
+		query = db.Conn.Model(&models.Paket{}).Where(sWhere, queryparam.Search, queryparam.Search).Count(&result)
+	} else {
+		query = db.Conn.Model(&models.Paket{}).Where(sWhere).Count(&result)
 	}
 	// end where
 
-	query := db.Conn.Model(&models.Paket{}).Where(sWhere).Count(&result)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
 	err = query.Error
 	if err != nil {
