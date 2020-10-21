@@ -46,7 +46,7 @@ func main() {
 	e.Use(middleware.CORS())
 	// e.Use(midd.MiddlewareOne)
 	// e.Use(jwt.JWT(e))
-
+	e.Debug = false
 	R := routes.EchoRoutes{E: e}
 
 	R.InitialRouter()
