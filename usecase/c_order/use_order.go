@@ -202,6 +202,15 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
+	fn := &repofunction.FN{
+		Claims: Claims,
+	}
+
+	CntProgress := fn.GetCountTrxProses()
+	if CntProgress > 0 {
+		return errors.New("Anda sedang dalam proses transaksi")
+	}
+
 	var dataUpdate = map[string]interface{}{
 		"status": data.Status,
 	}

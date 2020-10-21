@@ -146,5 +146,27 @@ func (fn *FN) InTimeActiveBarber(data *models.Barber, orderDate time.Time) bool 
 		return false
 	}
 
-	// return IsActive
+}
+
+func (fn *FN) GetCountTrxProses() int {
+	var (
+		logger = logging.Logger{}
+		result = 0
+		conn   *gorm.DB
+	)
+	orderDate := time.Now()
+
+	conn = postgresdb.Conn
+	query := conn.Table("order_h").Select(`*`).Where(`
+			status = 'P' AND barber_id = ? AND capster_id = ? AND order_date::date = ?
+		`, fn.Claims.BarberID, fn.Claims.CapsterID, orderDate.Format("2006-01-02")).Count(&result)
+	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
+	err := query.Error
+	if err != nil {
+		if err == models.ErrNotFound {
+			return 0
+		}
+		logger.Error(err)
+	}
+	return result
 }
