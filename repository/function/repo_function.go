@@ -120,3 +120,31 @@ func (fn *FN) GetCapsterData() (result *models.SsUser, err error) {
 	}
 	return mCapster, nil
 }
+
+func (fn *FN) InTimeActiveBarber(data *models.Barber, orderDate time.Time) bool {
+	var (
+		P = fmt.Println
+	)
+
+	// timeStart := data.OperationStart.Date(timeOrder.Year(), timeOrder.Month(), timeOrder.Day())
+	timeStart := time.Date(orderDate.Year(), orderDate.Month(), orderDate.Day(), data.OperationStart.Hour(),
+		data.OperationStart.Minute(), data.OperationStart.Second(), data.OperationStart.Nanosecond(), data.OperationStart.Local().Location())
+
+	timeEnd := time.Date(orderDate.Year(), orderDate.Month(), orderDate.Day(), data.OperationEnd.Hour(),
+		data.OperationEnd.Minute(), data.OperationEnd.Second(), data.OperationEnd.Nanosecond(), data.OperationEnd.Local().Location())
+
+	timeOrder := time.Date(orderDate.Year(), orderDate.Month(), orderDate.Day(), orderDate.Hour(),
+		orderDate.Minute(), orderDate.Second(), orderDate.Nanosecond(), orderDate.Local().Location())
+
+	P(timeStart)
+	P(timeEnd)
+	P(timeOrder)
+
+	if timeOrder.Before(timeEnd) && timeOrder.After(timeStart) {
+		return true
+	} else {
+		return false
+	}
+
+	// return IsActive
+}

@@ -158,6 +158,10 @@ func (u *useOrder) Create(ctx context.Context, Claims util.Claims, data *models.
 		return errors.New("Tidak bisa transaksi,Barber sedang tidak aktif")
 	}
 
+	if !fn.InTimeActiveBarber(dataBarber, data.OrderDate) {
+		return errors.New("Mohon maaf , waktu di luar jam oprasional")
+	}
+
 	mOrder.OrderDate = data.OrderDate
 	mOrder.BarberID, _ = strconv.Atoi(Claims.BarberID)
 	mOrder.Status = "N"
