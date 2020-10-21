@@ -154,7 +154,6 @@ func (fn *FN) GetCountTrxProses() int {
 		result = 0
 		conn   *gorm.DB
 	)
-	orderDate := time.Now()
 
 	conn = postgresdb.Conn
 	query := conn.Table("order_h").Select(`*`).Where(`
