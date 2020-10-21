@@ -158,8 +158,8 @@ func (fn *FN) GetCountTrxProses() int {
 
 	conn = postgresdb.Conn
 	query := conn.Table("order_h").Select(`*`).Where(`
-			status = 'P' AND barber_id = ? AND capster_id = ? AND order_date::date = ?
-		`, fn.Claims.BarberID, fn.Claims.CapsterID, orderDate.Format("2006-01-02")).Count(&result)
+			status = 'P' AND order_date::date = now()::date AND barber_id = ? AND capster_id = ? 
+		`, fn.Claims.BarberID, fn.Claims.CapsterID).Count(&result)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
 	err := query.Error
 	if err != nil {
