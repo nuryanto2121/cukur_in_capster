@@ -154,11 +154,12 @@ func (fn *FN) GetCountTrxProses() int {
 		result = 0
 		conn   *gorm.DB
 	)
-
+	sDate := time.Now().Format("2006-01-02")
+	fmt.Println("GetCountTrxProses :" + sDate)
 	conn = postgresdb.Conn
 	query := conn.Table("order_h").Select(`*`).Where(`
-			status = 'P' AND order_date::date = now()::date AND barber_id = ? AND capster_id = ? 
-		`, fn.Claims.BarberID, fn.Claims.CapsterID).Count(&result)
+			status = 'P' AND order_date::date = ? AND barber_id = ? AND capster_id = ? 
+		`, sDate, fn.Claims.BarberID, fn.Claims.CapsterID).Count(&result)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr())) //cath to log query string
 	err := query.Error
 	if err != nil {
