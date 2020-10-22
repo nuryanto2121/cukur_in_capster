@@ -206,9 +206,11 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 		Claims: Claims,
 	}
 
-	CntProgress := fn.GetCountTrxProses()
-	if CntProgress > 0 {
-		return errors.New("Anda sedang dalam proses transaksi")
+	if data.Status == "P" {
+		CntProgress := fn.GetCountTrxProses()
+		if CntProgress > 0 {
+			return errors.New("Anda sedang dalam proses transaksi")
+		}
 	}
 
 	var dataUpdate = map[string]interface{}{
