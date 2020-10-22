@@ -110,9 +110,9 @@ func (u *useOrder) GetSumPrice(ctx context.Context, Claims util.Claims, querypar
 	}
 
 	if queryparam.InitSearch != "" {
-		queryparam.InitSearch += fmt.Sprintf(" AND capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch += fmt.Sprintf(" AND status ='F' AND capster_id = %s", Claims.CapsterID)
 	} else {
-		queryparam.InitSearch = fmt.Sprintf(" capster_id = %s", Claims.CapsterID)
+		queryparam.InitSearch = fmt.Sprintf(" status ='F' AND capster_id = %s", Claims.CapsterID)
 	}
 	result, err = u.repoOrderH.SumPriceDetail(queryparam)
 	if err != nil {
