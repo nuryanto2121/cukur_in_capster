@@ -30,6 +30,10 @@ FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
+RUN apk add --no-cache tzdata
+
+ENV TZ Asia/Jakarta
+
 WORKDIR /root/
 
 
@@ -40,14 +44,13 @@ ARG LOG_DIR=/root/wwwroot
 # Create Log Directorytail
 RUN mkdir -p ${LOG_DIR}
 
-
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
 
 COPY --from=builder /app/config.json .
 
 # Expose port 8080 to the outside world
-EXPOSE 9195
+EXPOSE 9192
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]

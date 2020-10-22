@@ -55,6 +55,7 @@ func autoMigrate() {
 	log.Println("STARTING AUTO MIGRATE ")
 	Conn.AutoMigrate(
 		models.SsUser{},
+
 		// models.Paket{},
 		// models.CapsterCollection{},
 		// models.Barber{},
