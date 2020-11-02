@@ -7,6 +7,7 @@ import (
 	ifileupload "nuryanto2121/cukur_in_capster/interface/fileupload"
 	iusers "nuryanto2121/cukur_in_capster/interface/user"
 	"nuryanto2121/cukur_in_capster/models"
+	"nuryanto2121/cukur_in_capster/pkg/setting"
 	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"nuryanto2121/cukur_in_capster/redisdb"
 	useemailauth "nuryanto2121/cukur_in_capster/usecase/email_auth"
@@ -26,40 +27,133 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	DataCapster, err := u.repoAuth.GetByAccount(dataLogin.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
-	if err != nil {
-		// return util.GoutputErrCode(http.StatusUnauthorized, "Your User/Email not valid.") //appE.ResponseError(util.GetStatusCode(err), fmt.Sprintf("%v", err), nil)
-		return nil, errors.New("Your Account not valid.")
+	var (
+		DataOwner        = models.SsUser{}
+		DataCapster      = models.LoginCapster{}
+		isBarber    bool = true
+		response         = map[string]interface{}{}
+		expireToken      = setting.FileConfigSetting.JWTExpired
+		canChange   bool = false
+	)
+
+	if dataLogin.Type == "owner" {
+		DataOwner, err = u.repoAuth.GetByAccount(dataLogin.Account, false) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
+		if DataOwner.UserType == "" && err == models.ErrNotFound {
+			return nil, errors.New("Email anda belum terdaftar.")
+		} else {
+			if DataOwner.UserType == "capster" {
+				DataCapster, err = u.repoAuth.GetByCapster(dataLogin.Account)
+				if err != nil {
+					return nil, errors.New("Email anda belum terdaftar.")
+				}
+				if !DataCapster.IsActive {
+					return nil, errors.New("Account anda belum aktif. Silahkan hubungi pemilik Barber")
+				}
+
+				if DataCapster.BarberID == 0 {
+					return nil, errors.New("Anda belum terhubung dengan Barber, Silahkan hubungi pemilik Barber")
+				}
+
+				if !DataCapster.BarberIsActive {
+					return nil, errors.New("Saat ini barber anda sedang tidak aktif.")
+				}
+				isBarber = false
+			} else {
+				DataCapster, err = u.repoAuth.GetByCapster(dataLogin.Account)
+				if DataCapster.Email != "" && DataCapster.Email == dataLogin.Account {
+					canChange = true
+				}
+
+			}
+
+			if !DataOwner.IsActive {
+				return nil, errors.New("Account andan belum aktif. Silahkan hubungi pemilik Barber")
+			}
+		}
+	} else {
+		isBarber = false
+		DataCapster, err = u.repoAuth.GetByCapster(dataLogin.Account)
+		if err != nil {
+			return nil, errors.New("Email anda belum terdaftar.")
+		}
+		if !DataCapster.IsActive {
+			return nil, errors.New("Account anda belum aktif. Silahkan hubungi pemilik Barber")
+		}
+
+		if DataCapster.BarberID == 0 {
+			return nil, errors.New("Anda belum terhubung dengan Barber, Silahkan hubungi pemilik Barber")
+		}
+
+		if !DataCapster.BarberIsActive {
+			return nil, errors.New("Saat ini barber anda sedang tidak aktif.")
+		}
+
+		DataOwner, err = u.repoAuth.GetByAccount(dataLogin.Account, true)
+		if DataOwner.Email != "" && DataOwner.Email == dataLogin.Account {
+			canChange = true
+		}
+
 	}
 
-	if !util.ComparePassword(DataCapster.Password, util.GetPassword(dataLogin.Password)) {
-		return nil, errors.New("Your Password not valid.")
-	}
-	// DataFile, err := u.repoFile.GetBySaFileUpload(ctx, DataCapster.FileID)
+	if isBarber {
+		if !util.ComparePassword(DataOwner.Password, util.GetPassword(dataLogin.Password)) {
+			return nil, errors.New("Password yang anda masukkan salah. Silahkan coba lagi.")
+		}
+		DataFile, err := u.repoFile.GetBySaFileUpload(ctx, DataOwner.FileID)
 
-	token, err := util.GenerateToken(DataCapster.CapsterID, DataCapster.OwnerID, DataCapster.BarberID)
-	if err != nil {
-		return nil, err
-	}
+		token, err := util.GenerateTokenBarber(DataOwner.UserID, dataLogin.Account, DataOwner.UserType)
+		if err != nil {
+			return nil, err
+		}
 
-	redisdb.AddSession(token, DataCapster.CapsterID, 0)
+		redisdb.AddSession(token, DataOwner.UserID, time.Duration(expireToken)*time.Hour)
 
-	restUser := map[string]interface{}{
-		"owner_id":     DataCapster.OwnerID,
-		"owner_name":   DataCapster.OwnerName,
-		"barber_id":    DataCapster.BarberID,
-		"barber_name":  DataCapster.BarberName,
-		"capster_id":   DataCapster.CapsterID,
-		"email":        DataCapster.Email,
-		"telp":         DataCapster.Telp,
-		"capster_name": DataCapster.CapsterName,
-		"file_id":      DataCapster.FileID,
-		"file_name":    DataCapster.FileName,
-		"file_path":    DataCapster.FilePath,
-	}
-	response := map[string]interface{}{
-		"token":        token,
-		"data_capster": restUser,
+		restUser := map[string]interface{}{
+			"owner_id":   DataOwner.UserID,
+			"owner_name": DataOwner.Name,
+			"email":      DataOwner.Email,
+			"telp":       DataOwner.Telp,
+			"file_id":    DataOwner.FileID,
+			"file_name":  DataFile.FileName,
+			"file_path":  DataFile.FilePath,
+		}
+		response = map[string]interface{}{
+			"token":      token,
+			"data_owner": restUser,
+			"user_type":  "barber",
+			"can_change": canChange,
+		}
+
+	} else {
+		if !util.ComparePassword(DataCapster.Password, util.GetPassword(dataLogin.Password)) {
+			return nil, errors.New("Password yang anda masukkan salah. Silahkan coba lagi.")
+		}
+
+		token, err := util.GenerateToken(DataCapster.CapsterID, DataCapster.OwnerID, DataCapster.BarberID)
+		if err != nil {
+			return nil, err
+		}
+		redisdb.AddSession(token, DataCapster.CapsterID, time.Duration(expireToken)*time.Hour)
+
+		restUser := map[string]interface{}{
+			"owner_id":     DataCapster.OwnerID,
+			"owner_name":   DataCapster.OwnerName,
+			"barber_id":    DataCapster.BarberID,
+			"barber_name":  DataCapster.BarberName,
+			"capster_id":   DataCapster.CapsterID,
+			"email":        DataCapster.Email,
+			"telp":         DataCapster.Telp,
+			"capster_name": DataCapster.CapsterName,
+			"file_id":      DataCapster.FileID,
+			"file_name":    DataCapster.FileName,
+			"file_path":    DataCapster.FilePath,
+		}
+		response = map[string]interface{}{
+			"token":        token,
+			"data_capster": restUser,
+			"user_type":    "capster",
+			"can_change":   canChange,
+		}
 	}
 
 	return response, nil
@@ -69,7 +163,7 @@ func (u *useAuht) ForgotPassword(ctx context.Context, dataForgot *models.ForgotF
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	DataCapster, err := u.repoAuth.GetByAccount(dataForgot.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
+	DataCapster, err := u.repoAuth.GetByCapster(dataForgot.Account) //u.repoUser.GetByEmailSaUser(dataLogin.UserName)
 	if err != nil {
 		// return util.GoutputErrCode(http.StatusUnauthorized, "Your User/Email not valid.") //appE.ResponseError(util.GetStatusCode(err), fmt.Sprintf("%v", err), nil)
 		return errors.New("Your Account not valid.")
@@ -89,7 +183,7 @@ func (u *useAuht) ResetPassword(ctx context.Context, dataReset *models.ResetPass
 		return errors.New("Password and Confirm Password not same.")
 	}
 
-	DataCapster, err := u.repoAuth.GetByAccount(dataReset.Account)
+	DataCapster, err := u.repoAuth.GetByCapster(dataReset.Account)
 	if err != nil {
 		return err
 	}
@@ -157,7 +251,7 @@ func (u *useAuht) Register(ctx context.Context, dataRegister models.RegisterForm
 	}
 
 	//store to redis
-	err = redisdb.AddSession(dataRegister.Account, GenCode, 2)
+	err = redisdb.AddSession(dataRegister.Account, GenCode, 24*time.Hour)
 	if err != nil {
 		return output, err
 	}

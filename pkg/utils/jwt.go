@@ -13,6 +13,14 @@ import (
 // var screet = setting.FileConfigSetting.App.JwtSecret
 // var jwtSecret = []byte("secreet")
 // var jwtConf *middleware.JWTConfig
+// ClaimsBarber :
+type ClaimsBarber struct {
+	UserID   string `json:"user_id,omitempty"`
+	UserName string `json:"user_name,omitempty"`
+	UserType string `json:"user_type,omitempty"`
+	// CompanyID int    `json:"company_id,omitempty"`
+	jwt.StandardClaims
+}
 
 // Claims :
 type Claims struct {
@@ -41,6 +49,33 @@ func GenerateToken(id int, owner_id int, barber_id int) (string, error) {
 		CapsterID: strconv.Itoa(id),
 		OwnerID:   strconv.Itoa(owner_id),
 		BarberID:  strconv.Itoa(barber_id),
+		StandardClaims: jwt.StandardClaims{
+			Issuer:    issuer,
+			ExpiresAt: time.Now().Add(time.Hour * time.Duration(expired_time)).Unix(),
+		},
+	}
+
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return tokenClaims.SignedString(jwtSecret)
+}
+
+func GenerateTokenBarber(id int, user_name string, user_type string) (string, error) {
+	viper.SetConfigFile(`config.json`)
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalf("setting.Setup, fail to parse 'config.json': %v", err)
+	}
+
+	var screet = viper.GetString(`jwt_secret`)
+	expired_time := viper.GetInt(`expire_jwt`)
+	issuer := viper.GetString(`app.issuer`)
+	var jwtSecret = []byte(screet)
+	// Set custom claims
+	// Ids,_ :=strconv.I(id)
+	claims := &ClaimsBarber{
+		UserID:   strconv.Itoa(id),
+		UserName: user_name,
+		UserType: user_type,
 		StandardClaims: jwt.StandardClaims{
 			Issuer:    issuer,
 			ExpiresAt: time.Now().Add(time.Hour * time.Duration(expired_time)).Unix(),
