@@ -993,6 +993,9 @@ var doc = `{
                 },
                 "pwd": {
                     "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
