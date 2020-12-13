@@ -38,9 +38,6 @@ func (fn *FN) GenTransactionNo(BarberCd string) (string, error) {
 	pref := fmt.Sprintf("%s%s", sMonth, sYear)
 	conn = postgresdb.Conn
 
-	// fmt.Printf("%v", prefixArr)
-	// ss := prefixArr[0]
-	// query := conn.Table("barber").Select("max(barber_cd)") //
 	query := conn.Where("sequence_cd = ?", BarberCd).Find(mSeqNo)
 	logger.Query(fmt.Sprintf("%v", query.QueryExpr()))
 	err := query.Error
@@ -125,7 +122,6 @@ func (fn *FN) InTimeActiveBarber(data *models.Barber, orderDate time.Time) bool 
 	var (
 		P = fmt.Println
 	)
-
 	// timeStart := data.OperationStart.Date(timeOrder.Year(), timeOrder.Month(), timeOrder.Day())
 	timeStart := time.Date(orderDate.Year(), orderDate.Month(), orderDate.Day(), data.OperationStart.Hour(),
 		data.OperationStart.Minute(), data.OperationStart.Second(), data.OperationStart.Nanosecond(), data.OperationStart.Local().Location())

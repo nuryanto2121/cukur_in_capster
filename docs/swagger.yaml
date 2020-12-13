@@ -135,7 +135,7 @@ info:
     name: Nuryanto
     url: https://www.linkedin.com/in/nuryanto-1b2721156/
   description: Backend REST API for golang nuryanto2121
-  title: Starter
+  title: Rest API Capster
   version: "1.0"
 paths:
   /capster/auth/change_password:

@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "Backend REST API for golang nuryanto2121",
-        "title": "Starter",
+        "title": "Rest API Capster",
         "contact": {
             "name": "Nuryanto",
             "url": "https://www.linkedin.com/in/nuryanto-1b2721156/",

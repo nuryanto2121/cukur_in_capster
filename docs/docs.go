@@ -1179,7 +1179,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "Starter",
+	Title:       "Rest API Capster",
 	Description: "Backend REST API for golang nuryanto2121",
 }
 

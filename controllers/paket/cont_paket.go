@@ -25,6 +25,7 @@ func NewContPaket(e *echo.Echo, a ipakets.Usecase) {
 
 	r := e.Group("/capster/paket")
 	r.Use(midd.JWT)
+	r.Use(midd.Versioning)
 	r.GET("/:id", controller.GetDataBy)
 	r.GET("", controller.GetList)
 

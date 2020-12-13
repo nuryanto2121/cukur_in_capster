@@ -25,7 +25,7 @@ func init() {
 
 }
 
-// @title Starter
+// @title Rest API Capster
 // @version 1.0
 // @description Backend REST API for golang nuryanto2121
 
