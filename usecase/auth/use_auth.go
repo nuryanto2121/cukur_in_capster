@@ -180,7 +180,7 @@ func (u *useAuht) ResetPassword(ctx context.Context, dataReset *models.ResetPass
 	defer cancel()
 
 	if dataReset.Passwd != dataReset.ConfirmPasswd {
-		return errors.New("Password and Confirm Password not same.")
+		return errors.New("Password dan confirm password harus sama.")
 	}
 
 	DataCapster, err := u.repoAuth.GetByCapster(dataReset.Account)
@@ -218,7 +218,7 @@ func (u *useAuht) Register(ctx context.Context, dataRegister models.RegisterForm
 
 	User.Name = dataRegister.Name
 	if dataRegister.Passwd != dataRegister.ConfirmPasswd {
-		return output, errors.New("Password and Confirm Password Not Valid")
+		return output, errors.New("Password dan confirm password harus sama.")
 	}
 	User.Password, _ = util.Hash(dataRegister.Passwd)
 	User.UserType = dataRegister.UserType
