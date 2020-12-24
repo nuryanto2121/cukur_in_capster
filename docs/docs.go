@@ -160,6 +160,46 @@ var doc = `{
                 }
             }
         },
+        "/capster/auth/logout": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "logout",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "OS Device",
+                        "name": "OS",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "OS Device",
+                        "name": "Version",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tool.ResponseModel"
+                        }
+                    }
+                }
+            }
+        },
         "/capster/auth/register": {
             "post": {
                 "produces": [
@@ -991,6 +1031,9 @@ var doc = `{
                 "account": {
                     "type": "string"
                 },
+                "fcm_token": {
+                    "type": "string"
+                },
                 "pwd": {
                     "type": "string"
                 },
@@ -1179,8 +1222,8 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "Rest API Capster",
-	Description: "Backend REST API for golang nuryanto2121",
+	Title:       "Capster Cukur-in",
+	Description: "REST API for Capter Cukur-in",
 }
 
 type s struct{}

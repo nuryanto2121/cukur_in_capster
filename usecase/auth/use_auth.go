@@ -11,6 +11,7 @@ import (
 	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"nuryanto2121/cukur_in_capster/redisdb"
 	useemailauth "nuryanto2121/cukur_in_capster/usecase/email_auth"
+	"strconv"
 	"time"
 )
 
@@ -23,6 +24,17 @@ type useAuht struct {
 func NewUserAuth(a iusers.Repository, b ifileupload.Repository, timeout time.Duration) iauth.Usecase {
 	return &useAuht{repoAuth: a, repoFile: b, contextTimeOut: timeout}
 }
+
+func (u *useAuht) Logout(ctx context.Context, Claims util.Claims, Token string) (err error) {
+	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
+	defer cancel()
+
+	redisdb.TurncateList(Token)
+	redisdb.TurncateList(Claims.CapsterID + "_fcm")
+
+	return nil
+}
+
 func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (output interface{}, err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
@@ -108,6 +120,10 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 
 		redisdb.AddSession(token, DataOwner.UserID, time.Duration(expireToken)*time.Hour)
 
+		if dataLogin.FcmToken != "" {
+			redisdb.AddSession(strconv.Itoa(DataOwner.UserID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
+		}
+
 		restUser := map[string]interface{}{
 			"owner_id":   DataOwner.UserID,
 			"owner_name": DataOwner.Name,
@@ -134,6 +150,10 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 			return nil, err
 		}
 		redisdb.AddSession(token, DataCapster.CapsterID, time.Duration(expireToken)*time.Hour)
+
+		if dataLogin.FcmToken != "" {
+			redisdb.AddSession(strconv.Itoa(DataCapster.CapsterID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
+		}
 
 		restUser := map[string]interface{}{
 			"owner_id":     DataCapster.OwnerID,

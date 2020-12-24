@@ -25,9 +25,9 @@ func init() {
 
 }
 
-// @title Rest API Capster
+// @title Capster Cukur-in
 // @version 1.0
-// @description Backend REST API for golang nuryanto2121
+// @description REST API for Capter Cukur-in
 
 // @contact.name Nuryanto
 // @contact.url https://www.linkedin.com/in/nuryanto-1b2721156/

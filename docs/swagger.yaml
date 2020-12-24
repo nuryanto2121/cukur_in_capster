@@ -21,6 +21,8 @@ definitions:
     properties:
       account:
         type: string
+      fcm_token:
+        type: string
       pwd:
         type: string
       type:
@@ -134,8 +136,8 @@ info:
     email: nuryantofattih@gmail.com
     name: Nuryanto
     url: https://www.linkedin.com/in/nuryanto-1b2721156/
-  description: Backend REST API for golang nuryanto2121
-  title: Rest API Capster
+  description: REST API for Capter Cukur-in
+  title: Capster Cukur-in
   version: "1.0"
 paths:
   /capster/auth/change_password:
@@ -223,6 +225,31 @@ paths:
           schema:
             $ref: '#/definitions/tool.ResponseModel'
       summary: Login
+      tags:
+      - Auth
+  /capster/auth/logout:
+    post:
+      parameters:
+      - description: OS Device
+        in: header
+        name: OS
+        required: true
+        type: string
+      - description: OS Device
+        in: header
+        name: Version
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.ResponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: logout
       tags:
       - Auth
   /capster/auth/register:
