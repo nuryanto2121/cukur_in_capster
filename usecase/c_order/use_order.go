@@ -10,6 +10,7 @@ import (
 
 	iorderd "nuryanto2121/cukur_in_capster/interface/c_order_d"
 	iorderh "nuryanto2121/cukur_in_capster/interface/c_order_h"
+	inotification "nuryanto2121/cukur_in_capster/interface/notification"
 	"nuryanto2121/cukur_in_capster/models"
 	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"strconv"
@@ -21,13 +22,15 @@ import (
 type useOrder struct {
 	repoOrderH     iorderh.Repository
 	repoOrderD     iorderd.Repository
+	repoNotif      inotification.Repository
 	contextTimeOut time.Duration
 }
 
-func NewUserMOrder(a iorderh.Repository, b iorderd.Repository, timeout time.Duration) iorderh.Usecase {
+func NewUserMOrder(a iorderh.Repository, b iorderd.Repository, c inotification.Repository, timeout time.Duration) iorderh.Usecase {
 	return &useOrder{
 		repoOrderH:     a,
 		repoOrderD:     b,
+		repoNotif:      c,
 		contextTimeOut: timeout}
 }
 
@@ -218,6 +221,13 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 	}
 
 	err = u.repoOrderH.Update(ID, dataUpdate)
+	if err != nil {
+		return err
+	}
+	var notifUpdate = map[string]interface{}{
+		"notification_status": "C",
+	}
+	err = u.repoNotif.Update(ID, notifUpdate)
 	if err != nil {
 		return err
 	}
