@@ -52,9 +52,9 @@ func (u *ContOrder) GetDataBy(e echo.Context) error {
 	}
 
 	var (
-		// logger = logging.Logger{}
-		appE = tool.Res{R: e} // wajib
-		id   = e.Param("id")  //kalo bukan int => 0
+		logger = logging.Logger{}
+		appE   = tool.Res{R: e} // wajib
+		id     = e.Param("id")  //kalo bukan int => 0
 		// valid  validation.Validation                 // wajib
 	)
 	ID, err := strconv.Atoi(id)
@@ -71,7 +71,7 @@ func (u *ContOrder) GetDataBy(e echo.Context) error {
 	if err != nil {
 		return appE.Response(http.StatusInternalServerError, fmt.Sprintf("%v", err), nil)
 	}
-
+	logger.Info(util.Stringify(data))
 	return appE.Response(http.StatusOK, "Ok", data)
 }
 
