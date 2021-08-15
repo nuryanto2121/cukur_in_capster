@@ -52,7 +52,7 @@ func NewContFileUpload(e *echo.Echo, useSaFileUpload ifileupload.UseCase) {
 // @Param upload_file formData file true "account image"
 // @Param path formData string true "path images"
 // @Success 200 {object} tool.ResponseModel
-// @Router /fileupload [post]
+// @Router /capster-service/fileupload [post]
 func (u *ContFileUpload) CreateImage(e echo.Context) (err error) {
 	ctx := e.Request().Context()
 	if ctx == nil {

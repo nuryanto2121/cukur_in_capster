@@ -40,7 +40,7 @@ func NewContPaket(e *echo.Echo, a ipakets.Usecase) {
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
 // @Success 200 {object} tool.ResponseModel
-// @Router /capster/paket/{id} [get]
+// @Router /capster-service/capster/paket/{id} [get]
 func (u *ContPaket) GetDataBy(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -79,7 +79,7 @@ func (u *ContPaket) GetDataBy(e echo.Context) error {
 // @Param initsearch query string false "InitSearch"
 // @Param sortfield query string false "SortField"
 // @Success 200 {object} models.ResponseModelList
-// @Router /capster/paket [get]
+// @Router /capster-service/capster/paket [get]
 func (u *ContPaket) GetList(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
