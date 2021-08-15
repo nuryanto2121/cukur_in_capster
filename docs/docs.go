@@ -28,7 +28,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/capster/auth/change_password": {
+        "/capster-service/capster/auth/change_password": {
             "post": {
                 "produces": [
                     "application/json"
@@ -72,7 +72,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/auth/forgot": {
+        "/capster-service/capster/auth/forgot": {
             "post": {
                 "produces": [
                     "application/json"
@@ -116,7 +116,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/auth/login": {
+        "/capster-service/capster/auth/login": {
             "post": {
                 "produces": [
                     "application/json"
@@ -160,7 +160,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/auth/logout": {
+        "/capster-service/capster/auth/logout": {
             "post": {
                 "security": [
                     {
@@ -200,7 +200,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/auth/register": {
+        "/capster-service/capster/auth/register": {
             "post": {
                 "produces": [
                     "application/json"
@@ -244,7 +244,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/auth/verify": {
+        "/capster-service/capster/auth/verify": {
             "post": {
                 "produces": [
                     "application/json"
@@ -288,7 +288,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/notification": {
+        "/capster-service/capster/notification": {
             "get": {
                 "security": [
                     {
@@ -360,7 +360,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/notification/beranda": {
+        "/capster-service/capster/notification/beranda": {
             "get": {
                 "security": [
                     {
@@ -400,7 +400,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/notification/{id}": {
+        "/capster-service/capster/notification/{id}": {
             "get": {
                 "security": [
                     {
@@ -501,7 +501,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/order": {
+        "/capster-service/capster/order": {
             "get": {
                 "security": [
                     {
@@ -620,7 +620,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/order/{id}": {
+        "/capster-service/capster/order/{id}": {
             "get": {
                 "security": [
                     {
@@ -766,7 +766,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/paket": {
+        "/capster-service/capster/paket": {
             "get": {
                 "security": [
                     {
@@ -838,7 +838,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/paket/{id}": {
+        "/capster-service/capster/paket/{id}": {
             "get": {
                 "security": [
                     {
@@ -885,7 +885,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/user": {
+        "/capster-service/capster/user": {
             "get": {
                 "security": [
                     {
@@ -1004,7 +1004,7 @@ var doc = `{
                 }
             }
         },
-        "/capster/user/{id}": {
+        "/capster-service/capster/user/{id}": {
             "get": {
                 "security": [
                     {
@@ -1150,7 +1150,7 @@ var doc = `{
                 }
             }
         },
-        "/fileupload": {
+        "/capster-service/fileupload": {
             "post": {
                 "security": [
                     {

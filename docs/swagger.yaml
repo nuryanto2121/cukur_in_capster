@@ -145,7 +145,7 @@ info:
   title: Capster Cukur-in
   version: "1.0"
 paths:
-  /capster/auth/change_password:
+  /capster-service/capster/auth/change_password:
     post:
       parameters:
       - description: OS Device
@@ -174,7 +174,7 @@ paths:
       summary: Change Password
       tags:
       - Auth
-  /capster/auth/forgot:
+  /capster-service/capster/auth/forgot:
     post:
       parameters:
       - description: OS Device
@@ -203,7 +203,7 @@ paths:
       summary: Forgot Password
       tags:
       - Auth
-  /capster/auth/login:
+  /capster-service/capster/auth/login:
     post:
       parameters:
       - description: OS Device
@@ -232,7 +232,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /capster/auth/logout:
+  /capster-service/capster/auth/logout:
     post:
       parameters:
       - description: OS Device
@@ -257,7 +257,7 @@ paths:
       summary: logout
       tags:
       - Auth
-  /capster/auth/register:
+  /capster-service/capster/auth/register:
     post:
       parameters:
       - description: OS Device
@@ -286,7 +286,7 @@ paths:
       summary: Register
       tags:
       - Auth
-  /capster/auth/verify:
+  /capster-service/capster/auth/verify:
     post:
       parameters:
       - description: OS Device
@@ -315,7 +315,7 @@ paths:
       summary: Verify
       tags:
       - Auth
-  /capster/notification:
+  /capster-service/capster/notification:
     get:
       parameters:
       - description: OS Device
@@ -362,7 +362,7 @@ paths:
       summary: GetList Notification
       tags:
       - Notification
-  /capster/notification/{id}:
+  /capster-service/capster/notification/{id}:
     get:
       parameters:
       - description: OS Device
@@ -427,7 +427,7 @@ paths:
       summary: Rubah Status Notification
       tags:
       - Notification
-  /capster/notification/beranda:
+  /capster-service/capster/notification/beranda:
     get:
       parameters:
       - description: OS Device
@@ -452,7 +452,7 @@ paths:
       summary: Jumlah Notif yg belum dibuka
       tags:
       - Notification
-  /capster/order:
+  /capster-service/capster/order:
     get:
       parameters:
       - description: OS Device
@@ -529,7 +529,7 @@ paths:
       summary: Add Order
       tags:
       - Order
-  /capster/order/{id}:
+  /capster-service/capster/order/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -623,7 +623,7 @@ paths:
       summary: Update Status Order
       tags:
       - Order
-  /capster/paket:
+  /capster-service/capster/paket:
     get:
       parameters:
       - description: OS Device
@@ -670,7 +670,7 @@ paths:
       summary: GetList Paket
       tags:
       - Paket
-  /capster/paket/{id}:
+  /capster-service/capster/paket/{id}:
     get:
       parameters:
       - description: OS Device
@@ -700,7 +700,7 @@ paths:
       summary: GetById
       tags:
       - Paket
-  /capster/user:
+  /capster-service/capster/user:
     get:
       parameters:
       - description: OS Device
@@ -777,7 +777,7 @@ paths:
       summary: Add User
       tags:
       - User
-  /capster/user/{id}:
+  /capster-service/capster/user/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -871,7 +871,7 @@ paths:
       summary: Rubah Profile
       tags:
       - User
-  /fileupload:
+  /capster-service/fileupload:
     post:
       consumes:
       - multipart/form-data
