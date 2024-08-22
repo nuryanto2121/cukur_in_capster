@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"nuryanto2121/cukur_in_capster/pkg/logging"
-	"nuryanto2121/cukur_in_capster/pkg/monggodb"
 	"nuryanto2121/cukur_in_capster/pkg/postgresdb"
 
 	// sqlxposgresdb "nuryanto2121/cukur_in_capster/pkg/postgresqlxdb"
@@ -20,7 +19,7 @@ func init() {
 	setting.Setup()
 	postgresdb.Setup()
 	redisdb.Setup()
-	monggodb.Setup()
+	// monggodb.Setup()
 	logging.Setup()
 
 }

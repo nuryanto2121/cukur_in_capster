@@ -1,11 +1,6 @@
 package logging
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"nuryanto2121/cukur_in_capster/pkg/monggodb"
-	util "nuryanto2121/cukur_in_capster/pkg/utils"
 	"time"
 )
 
@@ -24,12 +19,12 @@ type auditLog struct {
 
 func (a *auditLog) saveAudit() {
 
-	a.ID = util.GetTimeNow().Unix()
-	a.Message = "API Capster : " + a.Message
-	result, err := monggodb.MCon.Collection("auditlogs").InsertOne(context.TODO(), a)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	fmt.Println("Inserted a single document: ", result.InsertedID)
+	// a.ID = util.GetTimeNow().Unix()
+	// a.Message = "API Capster : " + a.Message
+	// result, err := monggodb.MCon.Collection("auditlogs").InsertOne(context.TODO(), a)
+	// if err != nil {
+	// 	log.Fatal(err.Error())
+	// }
+	// fmt.Println("Inserted a single document: ", result.InsertedID)
 
 }
