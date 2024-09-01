@@ -50,7 +50,7 @@ COPY --from=builder /app/config_prod.json .
 COPY --from=builder /app/FCM-Key.json .
 
 # Expose port 8080 to the outside world
-EXPOSE 9192
+EXPOSE 9092
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]
