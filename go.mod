@@ -4,7 +4,6 @@ go 1.22.3
 
 require (
 	firebase.google.com/go v3.13.0+incompatible
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/astaxie/beego v1.12.3
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/structs v1.1.0
