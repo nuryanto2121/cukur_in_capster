@@ -10,12 +10,12 @@
         "_comment": "debug or release"
     },
     "smtp":{
-        "server":"smtp.gmail.com",
-        "port":587,
-        "user":"adm.accleog@gmail.com",
-        "passwd":"!@#$%12345",
-        "Identity":"Cukur_In",
-        "sender":"nuryanto@gmail.com"
+        "server":"smtp.hostinger.com",
+        "port":465,
+        "user":"noreply@cukurin.id",
+        "passwd":"D?p9N4IU",
+        "Identity":"cukur-In",
+        "sender":"noreply@cukurin.id"
     },
     "app": {
         "jwt_secret": "don'tPanic",

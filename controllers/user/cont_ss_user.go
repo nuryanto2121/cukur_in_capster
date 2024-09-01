@@ -49,7 +49,7 @@ func NewContUser(e *echo.Echo, a iusers.Usecase) {
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
 // @Success 200 {object} tool.ResponseModel
-// @Router /capster-service/capster/user/{id} [get]
+// @Router /capster/user/{id} [get]
 func (u *ContUser) GetDataBy(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -88,7 +88,7 @@ func (u *ContUser) GetDataBy(e echo.Context) error {
 // @Param initsearch query string false "InitSearch"
 // @Param sortfield query string false "SortField"
 // @Success 200 {object} models.ResponseModelList
-// @Router /capster-service/capster/user [get]
+// @Router /capster/user [get]
 func (u *ContUser) GetList(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -136,7 +136,7 @@ func (u *ContUser) GetList(e echo.Context) error {
 // @Param Version header string true "OS Device"
 // @Param req body models.AddUser true "req param #changes are possible to adjust the form of the registration form from frontend"
 // @Success 200 {object} tool.ResponseModel
-// @Router /capster-service/capster/user [post]
+// @Router /capster/user [post]
 func (u *ContUser) Create(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -187,7 +187,7 @@ func (u *ContUser) Create(e echo.Context) error {
 // @Param id path string true "ID"
 // @Param req body models.UpdateUser true "req param #changes are possible to adjust the form of the registration form from frontend"
 // @Success 200 {object} tool.ResponseModel
-// @Router /capster-service/capster/user/{id} [put]
+// @Router /capster/user/{id} [put]
 func (u *ContUser) Update(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {
@@ -235,7 +235,7 @@ func (u *ContUser) Update(e echo.Context) error {
 // @Param Version header string true "OS Device"
 // @Param id path string true "ID"
 // @Success 200 {object} tool.ResponseModel
-// @Router /capster-service/capster/user/{id} [delete]
+// @Router /capster/user/{id} [delete]
 func (u *ContUser) Delete(e echo.Context) error {
 	ctx := e.Request().Context()
 	if ctx == nil {

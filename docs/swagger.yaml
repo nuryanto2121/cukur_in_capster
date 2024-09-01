@@ -92,8 +92,7 @@ definitions:
     properties:
       all_column:
         type: string
-      data:
-        type: object
+      data: {}
       define_column:
         type: string
       define_size:
@@ -130,8 +129,7 @@ definitions:
     type: object
   tool.ResponseModel:
     properties:
-      data:
-        type: object
+      data: {}
       message:
         description: Code int         `json:"code"`
         type: string
@@ -145,7 +143,7 @@ info:
   title: Capster Cukur-in
   version: "1.0"
 paths:
-  /capster-service/capster/auth/change_password:
+  /capster/auth/change_password:
     post:
       parameters:
       - description: OS Device
@@ -158,7 +156,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -174,7 +173,7 @@ paths:
       summary: Change Password
       tags:
       - Auth
-  /capster-service/capster/auth/forgot:
+  /capster/auth/forgot:
     post:
       parameters:
       - description: OS Device
@@ -187,7 +186,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -203,7 +203,7 @@ paths:
       summary: Forgot Password
       tags:
       - Auth
-  /capster-service/capster/auth/login:
+  /capster/auth/login:
     post:
       parameters:
       - description: OS Device
@@ -216,7 +216,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -232,7 +233,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /capster-service/capster/auth/logout:
+  /capster/auth/logout:
     post:
       parameters:
       - description: OS Device
@@ -257,7 +258,7 @@ paths:
       summary: logout
       tags:
       - Auth
-  /capster-service/capster/auth/register:
+  /capster/auth/register:
     post:
       parameters:
       - description: OS Device
@@ -270,7 +271,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -286,7 +288,7 @@ paths:
       summary: Register
       tags:
       - Auth
-  /capster-service/capster/auth/verify:
+  /capster/auth/verify:
     post:
       parameters:
       - description: OS Device
@@ -299,7 +301,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -315,7 +318,7 @@ paths:
       summary: Verify
       tags:
       - Auth
-  /capster-service/capster/notification:
+  /capster/notification:
     get:
       parameters:
       - description: OS Device
@@ -362,7 +365,7 @@ paths:
       summary: GetList Notification
       tags:
       - Notification
-  /capster-service/capster/notification/{id}:
+  /capster/notification/{id}:
     get:
       parameters:
       - description: OS Device
@@ -409,7 +412,8 @@ paths:
         name: id
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -427,7 +431,7 @@ paths:
       summary: Rubah Status Notification
       tags:
       - Notification
-  /capster-service/capster/notification/beranda:
+  /capster/notification/beranda:
     get:
       parameters:
       - description: OS Device
@@ -452,7 +456,7 @@ paths:
       summary: Jumlah Notif yg belum dibuka
       tags:
       - Notification
-  /capster-service/capster/order:
+  /capster/order:
     get:
       parameters:
       - description: OS Device
@@ -511,7 +515,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -529,7 +534,7 @@ paths:
       summary: Add Order
       tags:
       - Order
-  /capster-service/capster/order/{id}:
+  /capster/order/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -605,7 +610,8 @@ paths:
         name: id
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -623,7 +629,7 @@ paths:
       summary: Update Status Order
       tags:
       - Order
-  /capster-service/capster/paket:
+  /capster/paket:
     get:
       parameters:
       - description: OS Device
@@ -670,7 +676,7 @@ paths:
       summary: GetList Paket
       tags:
       - Paket
-  /capster-service/capster/paket/{id}:
+  /capster/paket/{id}:
     get:
       parameters:
       - description: OS Device
@@ -700,7 +706,7 @@ paths:
       summary: GetById
       tags:
       - Paket
-  /capster-service/capster/user:
+  /capster/user:
     get:
       parameters:
       - description: OS Device
@@ -759,7 +765,8 @@ paths:
         name: Version
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -777,7 +784,7 @@ paths:
       summary: Add User
       tags:
       - User
-  /capster-service/capster/user/{id}:
+  /capster/user/{id}:
     delete:
       parameters:
       - description: OS Device
@@ -853,7 +860,8 @@ paths:
         name: id
         required: true
         type: string
-      - description: 'req param #changes are possible to adjust the form of the registration form from frontend'
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
         in: body
         name: req
         required: true
@@ -871,7 +879,7 @@ paths:
       summary: Rubah Profile
       tags:
       - User
-  /capster-service/fileupload:
+  /fileupload:
     post:
       consumes:
       - multipart/form-data
