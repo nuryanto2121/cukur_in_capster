@@ -17,3 +17,4 @@ dump.rdb
 wwwroot/*
 __debug_bin
 tmp/runner-build
+FCM-Key.json
