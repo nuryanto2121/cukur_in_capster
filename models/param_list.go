@@ -2,11 +2,11 @@ package models
 
 // ParamList :
 type ParamList struct {
-	Page       int    `json:"page" valid:"Required"`
-	PerPage    int    `json:"per_page" valid:"Required"`
-	Search     string `json:"search,omitempty"`
-	InitSearch string `json:"init_search,omitempty"`
-	SortField  string `json:"sort_field,omitempty"`
+	Page       int    `json:"page" query:"page" valid:"Required"`
+	PerPage    int    `json:"perpage" query:"perpage" valid:"Required"`
+	Search     string `json:"search,omitempty" query:"search" `
+	InitSearch string `json:"initsearch,omitempty" query:"initsearch"`
+	SortField  string `json:"sortfield,omitempty" query:"sortfield"`
 }
 
 type ParamDynamicList struct {
