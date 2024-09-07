@@ -1,6 +1,7 @@
 package redisdb
 
 import (
+	"context"
 	"encoding/json"
 	"nuryanto2121/cukur_in_capster/pkg/setting"
 
@@ -16,7 +17,7 @@ type Register struct {
 }
 
 // StoreRegister :
-func StoreRegister(data interface{}) error {
+func StoreRegister(ctx context.Context, data interface{}) error {
 	var Register Register
 
 	err := mapstructure.Decode(data, &Register)
@@ -34,12 +35,12 @@ func StoreRegister(data interface{}) error {
 		"data":       string(bRegister),
 	}
 
-	dRegister, _ := json.Marshal(mRegister)
+	dRegister, err := json.Marshal(mRegister)
 	if err != nil {
 		return err
 	}
 
-	_, err = rdb.SAdd(setting.FileConfigSetting.RedisDBSetting.Key, string(dRegister)).Result()
+	_, err = rdb.SAdd(ctx, setting.FileConfigSetting.RedisDBSetting.Key, string(dRegister)).Result()
 	if err != nil {
 		return err
 	}

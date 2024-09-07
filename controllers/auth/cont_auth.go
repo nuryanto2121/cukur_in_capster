@@ -14,8 +14,6 @@ import (
 
 	_ "nuryanto2121/cukur_in_capster/docs"
 
-	echoSwagger "github.com/swaggo/echo-swagger"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -32,7 +30,6 @@ func NewContAuth(e *echo.Echo, useAuth iauth.Usecase) {
 	}
 
 	// e.POST("/capster/auth/register", cont.Register)
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	r := e.Group("/capster/auth")
 	r.Use(midd.Versioning)
 	r.POST("/login", cont.Login)

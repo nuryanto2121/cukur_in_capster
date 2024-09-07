@@ -6,8 +6,8 @@ import (
 	"log"
 	"strconv"
 
-	firebase "firebase.google.com/go"
-	"firebase.google.com/go/messaging"
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/messaging"
 	"google.golang.org/api/option"
 )
 
@@ -49,7 +49,7 @@ func (s *SendFCM) SendPushNotification() error {
 		},
 	}
 
-	br, err := client.SendMulticast(context.Background(), message)
+	br, err := client.SendEachForMulticast(context.Background(), message)
 	// br, err := client.SendMulticast(ctx, message)
 	if err != nil {
 		log.Fatalln(err)
@@ -57,7 +57,14 @@ func (s *SendFCM) SendPushNotification() error {
 
 	// See the BatchResponse reference documentation
 	// for the contents of response.
-	fmt.Printf("%d messages were sent successfully\n", br.SuccessCount)
+	if br.FailureCount > 0 {
+		// fmt.Println("%s", br.Responses)
+		for _, k := range br.Responses {
+			fmt.Printf("messages were failed : %s \n", k.Error.Error())
+		}
+	} else {
+		fmt.Printf("%d messages were sent successfully\n", br.SuccessCount)
+	}
 	// [END send_multicast]
 
 	return nil

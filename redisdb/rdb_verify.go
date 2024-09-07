@@ -1,6 +1,7 @@
 package redisdb
 
 import (
+	"context"
 	"encoding/json"
 	"nuryanto2121/cukur_in_capster/pkg/setting"
 
@@ -15,7 +16,7 @@ type Verify struct {
 }
 
 // StoreVerify :
-func StoreVerify(data interface{}) error {
+func StoreVerify(ctx context.Context, data interface{}) error {
 	var verify Verify
 
 	err := mapstructure.Decode(data, &verify)
@@ -33,7 +34,7 @@ func StoreVerify(data interface{}) error {
 		return err
 	}
 
-	_, err = rdb.SAdd(setting.FileConfigSetting.RedisDBSetting.Key, string(dVerify)).Result()
+	_, err = rdb.SAdd(ctx, setting.FileConfigSetting.RedisDBSetting.Key, string(dVerify)).Result()
 	if err != nil {
 		return err
 	}

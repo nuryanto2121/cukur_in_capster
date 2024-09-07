@@ -29,8 +29,8 @@ func (u *useAuht) Logout(ctx context.Context, Claims util.Claims, Token string) 
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
 
-	redisdb.TurncateList(Token)
-	redisdb.TurncateList(Claims.CapsterID + "_fcm")
+	redisdb.TurncateList(ctx, Token)
+	redisdb.TurncateList(ctx, Claims.CapsterID+"_fcm")
 
 	return nil
 }
@@ -118,10 +118,10 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 			return nil, err
 		}
 
-		redisdb.AddSession(token, DataOwner.UserID, time.Duration(expireToken)*time.Hour)
+		redisdb.AddSession(ctx, token, DataOwner.UserID, time.Duration(expireToken)*time.Hour)
 
 		if dataLogin.FcmToken != "" {
-			redisdb.AddSession(strconv.Itoa(DataOwner.UserID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
+			redisdb.AddSession(ctx, strconv.Itoa(DataOwner.UserID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
 		}
 
 		restUser := map[string]interface{}{
@@ -149,10 +149,10 @@ func (u *useAuht) Login(ctx context.Context, dataLogin *models.LoginForm) (outpu
 		if err != nil {
 			return nil, err
 		}
-		redisdb.AddSession(token, DataCapster.CapsterID, time.Duration(expireToken)*time.Hour)
+		redisdb.AddSession(ctx, token, DataCapster.CapsterID, time.Duration(expireToken)*time.Hour)
 
 		if dataLogin.FcmToken != "" {
-			redisdb.AddSession(strconv.Itoa(DataCapster.CapsterID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
+			redisdb.AddSession(ctx, strconv.Itoa(DataCapster.CapsterID)+"_fcm", dataLogin.FcmToken, time.Duration(expireToken)*time.Hour)
 		}
 
 		restUser := map[string]interface{}{
@@ -271,7 +271,7 @@ func (u *useAuht) Register(ctx context.Context, dataRegister models.RegisterForm
 	}
 
 	//store to redis
-	err = redisdb.AddSession(dataRegister.Account, GenCode, 24*time.Hour)
+	err = redisdb.AddSession(ctx, dataRegister.Account, GenCode, 24*time.Hour)
 	if err != nil {
 		return output, err
 	}
@@ -284,7 +284,7 @@ func (u *useAuht) Register(ctx context.Context, dataRegister models.RegisterForm
 func (u *useAuht) Verify(ctx context.Context, dataVeriry models.VerifyForm) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
 	defer cancel()
-	data := redisdb.GetSession(dataVeriry.Account)
+	data := redisdb.GetSession(ctx, dataVeriry.Account)
 	if data == "" {
 		return errors.New("Please Resend Code")
 	}

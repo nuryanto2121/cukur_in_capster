@@ -27,8 +27,8 @@ func NewContUser(e *echo.Echo, a iusers.Usecase) {
 	controller := &ContUser{
 		useUser: a,
 	}
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
-	e.GET("/health_check", controller.HealthCheck)
+	e.GET("/capster-service/swagger/*", echoSwagger.WrapHandler)
+	e.GET("/capster-service/health_check", controller.HealthCheck)
 
 	r := e.Group("/capster/user")
 	r.Use(midd.JWT)

@@ -1,6 +1,7 @@
 package midd
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	version "nuryanto2121/cukur_in_capster/middleware/versioning"
@@ -11,7 +12,7 @@ import (
 	"nuryanto2121/cukur_in_capster/redisdb"
 	"strconv"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -31,7 +32,7 @@ func JWT(next echo.HandlerFunc) echo.HandlerFunc {
 			code = http.StatusNetworkAuthenticationRequired
 			msg = "Auth Token Required"
 		} else {
-			existToken := redisdb.GetSession(token)
+			existToken := redisdb.GetSession(e.Request().Context(), token)
 			if existToken == "" {
 				code = http.StatusUnauthorized
 				msg = "Token Failed"
@@ -39,16 +40,21 @@ func JWT(next echo.HandlerFunc) echo.HandlerFunc {
 			claims, err := util.ParseToken(token)
 			if err != nil {
 				code = http.StatusUnauthorized
-				switch err.(*jwt.ValidationError).Errors {
-				case jwt.ValidationErrorExpired:
+				if errors.Is(err, jwt.ErrTokenExpired) {
 					msg = "Token Expired"
-				default:
+				} else if errors.Is(err, jwt.ErrTokenNotValidYet) {
+					msg = "Token Not Yet Valid"
+				} else if errors.Is(err, jwt.ErrTokenMalformed) {
+					msg = "Token Malformed"
+				} else if errors.Is(err, jwt.ErrTokenSignatureInvalid) {
+					msg = "Invalid Token Signature"
+				} else {
 					msg = "Token Failed"
 				}
 			} else {
 				var issuer = setting.FileConfigSetting.App.Issuer
-				valid := claims.VerifyIssuer(issuer, true)
-				if !valid {
+				valid, _ := claims.GetIssuer() //VerifyIssuer(issuer, true)
+				if valid != issuer {
 					code = http.StatusUnauthorized
 					msg = "Issuer is not valid"
 				}

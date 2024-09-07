@@ -116,11 +116,11 @@ func (u *useNotification) Create(ctx context.Context, Claims util.Claims, Token 
 		DeviceToken: TokenFCM,
 	}
 
-	go fcm.SendPushNotification()
-	// err = fcm.SendPushNotification(ctx)
-	// if err != nil {
-	// 	return err
-	// }
+	// go fcm.SendPushNotification()
+	err = fcm.SendPushNotification()
+	if err != nil {
+		return err
+	}
 	//end send notif
 
 	return nil

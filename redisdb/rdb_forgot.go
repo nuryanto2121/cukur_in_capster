@@ -1,6 +1,7 @@
 package redisdb
 
 import (
+	"context"
 	"encoding/json"
 	"nuryanto2121/cukur_in_capster/pkg/setting"
 
@@ -15,7 +16,7 @@ type Forgot struct {
 }
 
 // StoreForgot :
-func StoreForgot(data interface{}) error {
+func StoreForgot(ctx context.Context, data interface{}) error {
 	var forgot Forgot
 
 	err := mapstructure.Decode(data, &forgot)
@@ -33,12 +34,12 @@ func StoreForgot(data interface{}) error {
 		"data":       string(bForgot),
 	}
 
-	dForgot, _ := json.Marshal(mForgot)
+	dForgot, err := json.Marshal(mForgot)
 	if err != nil {
 		return err
 	}
 
-	_, err = rdb.SAdd(setting.FileConfigSetting.RedisDBSetting.Key, string(dForgot)).Result()
+	_, err = rdb.SAdd(ctx, setting.FileConfigSetting.RedisDBSetting.Key, string(dForgot)).Result()
 	if err != nil {
 		return err
 	}

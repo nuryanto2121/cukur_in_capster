@@ -1,13 +1,14 @@
 package redisdb
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"time"
 
 	"nuryanto2121/cukur_in_capster/pkg/setting"
 
-	"github.com/go-redis/redis"
+	"github.com/redis/go-redis/v9"
 )
 
 var rdb *redis.Client
@@ -21,7 +22,7 @@ func Setup() {
 		Password: setting.FileConfigSetting.RedisDBSetting.Password,
 		DB:       setting.FileConfigSetting.RedisDBSetting.DB,
 	})
-	_, err := rdb.Ping().Result()
+	_, err := rdb.Ping(context.Background()).Result()
 	if err != nil {
 		fmt.Println(err)
 		// logging.Error("0", err)

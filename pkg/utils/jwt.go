@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/spf13/viper"
 )
 
@@ -19,7 +19,7 @@ type ClaimsBarber struct {
 	UserName string `json:"user_name,omitempty"`
 	UserType string `json:"user_type,omitempty"`
 	// CompanyID int    `json:"company_id,omitempty"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 // Claims :
@@ -28,7 +28,7 @@ type Claims struct {
 	OwnerID   string `json:"owner_id,omitempty"`
 	BarberID  string `json:"barber_id,omitempty"`
 	// CompanyID int    `json:"company_id,omitempty"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 // GenerateToken :
@@ -49,9 +49,11 @@ func GenerateToken(id int, owner_id int, barber_id int) (string, error) {
 		CapsterID: strconv.Itoa(id),
 		OwnerID:   strconv.Itoa(owner_id),
 		BarberID:  strconv.Itoa(barber_id),
-		StandardClaims: jwt.StandardClaims{
-			Issuer:    issuer,
-			ExpiresAt: time.Now().Add(time.Hour * time.Duration(expired_time)).Unix(),
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer: issuer,
+			ExpiresAt: &jwt.NumericDate{
+				Time: time.Now().Add(time.Hour * time.Duration(expired_time)), // Menambahkan expired_time dalam bentuk durasi jam
+			},
 		},
 	}
 
@@ -76,9 +78,11 @@ func GenerateTokenBarber(id int, user_name string, user_type string) (string, er
 		UserID:   strconv.Itoa(id),
 		UserName: user_name,
 		UserType: user_type,
-		StandardClaims: jwt.StandardClaims{
-			Issuer:    issuer,
-			ExpiresAt: time.Now().Add(time.Hour * time.Duration(expired_time)).Unix(),
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer: issuer,
+			ExpiresAt: &jwt.NumericDate{
+				Time: time.Now().Add(time.Hour * time.Duration(expired_time)), // Menambahkan expired_time dalam bentuk durasi jam
+			},
 		},
 	}
 
