@@ -38,10 +38,11 @@ func NewContAuth(e *echo.Echo, useAuth iauth.Usecase) {
 	r.POST("/verify", cont.Verify)
 	r.POST("/register", cont.Register)
 
-	L := e.Group("/capster/auth/logout")
+	L := e.Group("/capster/auth")
 	L.Use(midd.JWT)
 	L.Use(midd.Versioning)
-	L.POST("", cont.Logout)
+	L.POST("/logout", cont.Logout)
+	L.PATCH("/fcm", cont.pathFCM)
 }
 
 // Logout :
@@ -261,4 +262,48 @@ func (u *ContAuth) ForgotPassword(e echo.Context) error {
 
 	return appE.Response(http.StatusOK, "Check Your Email", nil)
 
+}
+
+// path-fcm :
+// @Summary path-fcm
+// @Security ApiKeyAuth
+// @Tags Auth
+// @Produce json
+// @Param OS header string true "OS Device"
+// @Param Version header string true "Version"
+// @Param req body models.PathFCM true "req param #changes are possible to adjust the form of the registration form from frontend"
+// @Success 200 {object} tool.ResponseModel
+// @Router /user/auth/fcm [patch]
+func (u *ContAuth) pathFCM(e echo.Context) error {
+	ctx := e.Request().Context()
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	var (
+		logger = logging.Logger{} // wajib
+		appE   = tool.Res{R: e}   // wajib
+		// client sa_models.SaClient
+
+		form = models.PathFCM{}
+	)
+
+	// validasi and bind to struct
+	httpCode, errMsg := app.BindAndValid(e, &form)
+	logger.Info(util.Stringify(form))
+	if httpCode != 200 {
+		return appE.ResponseError(http.StatusBadRequest, errMsg, nil)
+	}
+
+	claims, err := app.GetClaims(e)
+	if err != nil {
+		return appE.Response(http.StatusBadRequest, fmt.Sprintf("%v", err), nil)
+	}
+
+	form.CapsterID = claims.CapsterID
+	err = u.useAuth.PathFCM(ctx, form)
+	if err != nil {
+		return appE.ResponseError(http.StatusUnauthorized, fmt.Sprintf("%v", err), nil)
+	}
+	return appE.Response(http.StatusOK, "Ok", nil)
 }

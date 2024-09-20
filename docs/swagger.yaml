@@ -66,6 +66,11 @@ definitions:
       status:
         type: string
     type: object
+  models.PathFCM:
+    properties:
+      fcm_token:
+        type: string
+    type: object
   models.RegisterForm:
     properties:
       account:
@@ -917,6 +922,38 @@ paths:
       summary: File Upload
       tags:
       - FileUpload
+  /user/auth/fcm:
+    patch:
+      parameters:
+      - description: OS Device
+        in: header
+        name: OS
+        required: true
+        type: string
+      - description: Version
+        in: header
+        name: Version
+        required: true
+        type: string
+      - description: 'req param #changes are possible to adjust the form of the registration
+          form from frontend'
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.PathFCM'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.ResponseModel'
+      security:
+      - ApiKeyAuth: []
+      summary: path-fcm
+      tags:
+      - Auth
 securityDefinitions:
   ApiKeyAuth:
     in: header

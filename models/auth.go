@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-//LoginForm :
+// LoginForm :
 type LoginForm struct {
 	Account  string `json:"account" valid:"Required"`
 	Password string `json:"pwd" valid:"Required"`
@@ -60,4 +60,9 @@ type DataLogin struct {
 	FileID   sql.NullInt64  `json:"file_id" db:"file_id"`
 	FileName sql.NullString `json:"file_name" db:"file_name"`
 	FilePath sql.NullString `json:"file_path" db:"file_path"`
+}
+
+type PathFCM struct {
+	FcmToken  string `json:"fcm_token"`
+	CapsterID string `json:"capster_id,omitempty" swaggerignore:"true"`
 }

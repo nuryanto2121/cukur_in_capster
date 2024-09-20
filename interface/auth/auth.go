@@ -18,4 +18,5 @@ type Usecase interface {
 	ResetPassword(ctx context.Context, dataReset *models.ResetPasswd) (err error)
 	Register(ctx context.Context, dataRegister models.RegisterForm) (output interface{}, err error)
 	Verify(ctx context.Context, dataVeriry models.VerifyForm) (err error)
+	PathFCM(ctx context.Context, dataPatch models.PathFCM) (err error)
 }

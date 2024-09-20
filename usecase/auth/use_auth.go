@@ -295,3 +295,21 @@ func (u *useAuht) Verify(ctx context.Context, dataVeriry models.VerifyForm) (err
 
 	return nil
 }
+
+// PathFCM implements iauth.Usecase.
+func (u *useAuht) PathFCM(ctx context.Context, dataPatch models.PathFCM) (err error) {
+	ctx, cancel := context.WithTimeout(ctx, u.contextTimeOut)
+	defer cancel()
+
+	//check active user
+	CapsterID, _ := strconv.Atoi(dataPatch.CapsterID)
+	_, err = u.repoAuth.GetDataBy(CapsterID)
+	if err != nil {
+		return err
+	}
+
+	if dataPatch.FcmToken != "" {
+		redisdb.AddSession(ctx, dataPatch.CapsterID+"_fcm", dataPatch.FcmToken, time.Duration(setting.FileConfigSetting.JWTExpired)*time.Hour)
+	}
+	return nil
+}
