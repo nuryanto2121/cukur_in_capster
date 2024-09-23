@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"nuryanto2121/cukur_in_capster/redisdb"
 	repofunction "nuryanto2121/cukur_in_capster/repository/function"
 	"strings"
 
@@ -22,15 +23,15 @@ import (
 type useOrder struct {
 	repoOrderH     iorderh.Repository
 	repoOrderD     iorderd.Repository
-	repoNotif      inotification.Repository
+	notifSVC       inotification.Usecase
 	contextTimeOut time.Duration
 }
 
-func NewUserMOrder(a iorderh.Repository, b iorderd.Repository, c inotification.Repository, timeout time.Duration) iorderh.Usecase {
+func NewUserMOrder(a iorderh.Repository, b iorderd.Repository, notifSVC inotification.Usecase, timeout time.Duration) iorderh.Usecase {
 	return &useOrder{
 		repoOrderH:     a,
 		repoOrderD:     b,
-		repoNotif:      c,
+		notifSVC:       notifSVC,
 		contextTimeOut: timeout}
 }
 
@@ -209,11 +210,16 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 		Claims: Claims,
 	}
 
-	if data.Status == "P" {
+	if data.Status == models.ORDER_PROCESS {
 		CntProgress := fn.GetCountTrxProses()
 		if CntProgress > 0 {
 			return errors.New("Anda sedang dalam proses transaksi")
 		}
+	}
+
+	order, err := u.repoOrderH.GetDataBy(ID)
+	if err != nil {
+		return errors.New("Order anda tidak ditemukan.")
 	}
 
 	var dataUpdate = map[string]interface{}{
@@ -224,12 +230,28 @@ func (u *useOrder) Update(ctx context.Context, Claims util.Claims, ID int, data 
 	if err != nil {
 		return err
 	}
-	var notifUpdate = map[string]interface{}{
-		"notification_status": "C",
+
+	var notifUpdate = models.StatusNotification{
+		NotificationStatus: string(models.NOTIF_CLOSED),
 	}
-	err = u.repoNotif.Update(ID, notifUpdate)
+	err = u.notifSVC.Update(ctx, Claims, ID, &notifUpdate)
 	if err != nil {
 		return err
+	}
+	//send notif to user when cukur finish
+	if data.Status == models.ORDER_FINISH {
+		userFCM := fmt.Sprintf("%v", redisdb.GetSession(ctx, strconv.Itoa(order.UserID)+"_fcm"))
+		var AddNotif = &models.AddNotification{
+			UserId:             order.UserID,
+			Title:              "Terima Kasih sudah Cukur di Barber Kami.",
+			Descs:              "FUFUFAFA",
+			NotificationStatus: string(models.NOTIF_NEW),
+			NotificationType:   string(models.NOTIF_INFO),
+			LinkId:             ID,
+			NotificationDate:   util.GetTimeNow(),
+		}
+
+		u.notifSVC.Create(ctx, Claims, userFCM, AddNotif)
 	}
 
 	return nil

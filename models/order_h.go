@@ -52,5 +52,5 @@ type OrderList struct {
 	// Years       int       `json:"years"`
 }
 type OrderStatus struct {
-	Status string `json:"status" `
+	Status StatusOrder `json:"status" `
 }

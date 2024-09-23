@@ -26,13 +26,14 @@ import (
 	_useOrder "nuryanto2121/cukur_in_capster/usecase/c_order"
 
 	_repoNotif "nuryanto2121/cukur_in_capster/repository/notification"
+	_useNotif "nuryanto2121/cukur_in_capster/usecase/notification"
 
 	"time"
 
 	"github.com/labstack/echo/v4"
 )
 
-//Echo :
+// Echo :
 type EchoRoutes struct {
 	E *echo.Echo
 }
@@ -52,11 +53,11 @@ func (e *EchoRoutes) InitialRouter() {
 	usePaket := _usePaket.NewUsePaket(repoPaket, timeoutContext)
 	_saPaketcont.NewContPaket(e.E, usePaket)
 
-	repoNo := _repoNotif.NewRepoNotification(postgresdb.Conn)
-
+	repoNotif := _repoNotif.NewRepoNotification(postgresdb.Conn)
+	useNotif := _useNotif.NewUseNotification(repoNotif, timeoutContext)
 	repoOrderD := _repoOrderd.NewRepoOrderD(postgresdb.Conn)
 	repoOrder := _repoOrder.NewRepoOrderH(postgresdb.Conn)
-	useOrder := _useOrder.NewUserMOrder(repoOrder, repoOrderD, repoNo, timeoutContext)
+	useOrder := _useOrder.NewUserMOrder(repoOrder, repoOrderD, useNotif, timeoutContext)
 	_contOrder.NewContOrder(e.E, useOrder)
 
 	//_saauthcont
